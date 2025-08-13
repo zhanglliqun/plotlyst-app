@@ -47,6 +47,7 @@ try:
 
     from plotlyst.core.client import json_client
     from plotlyst.event.handler import handle_exception
+    from plotlyst.i18n import set_up_i18n, load_translation
     from plotlyst.view.main_window import MainWindow
     from plotlyst.view.stylesheet import APP_STYLESHEET
 except Exception as ex:
@@ -97,6 +98,8 @@ if __name__ == '__main__':
         settings.clear()
     try:
         resource_registry.set_up(appctxt)
+        set_up_i18n(appctxt)
+        load_translation('zh_CN')
     except FileNotFoundError as ex:
         QMessageBox.critical(None, 'Could not locate resource file', traceback.format_exc())
 
