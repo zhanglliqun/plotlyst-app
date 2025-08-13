@@ -62,7 +62,6 @@ from plotlyst.service.resource import download_resource, download_nltk_resources
 from plotlyst.service.snapshot import SocialSnapshotPopup
 from plotlyst.service.tour import TourService
 from plotlyst.settings import settings
-from plotlyst.i18n import translate_ui, t
 from plotlyst.view._view import AbstractView
 from plotlyst.view.board_view import BoardView
 from plotlyst.view.characters_view import CharactersView
@@ -100,7 +99,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        translate_ui(self)
         self.resize(1000, 630)
         if app_env.is_dev():
             self.resize(1200, 830)
@@ -631,7 +629,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
         self.toolBar.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
 
         self.home_mode = ToolbarButton(self.toolBar)
-        self.home_mode.setText(t('Home'))
+        self.home_mode.setText('Home')
         self.home_mode.setIcon(IconRegistry.home_icon(color_on='#240046'))
 
         self.outline_mode = ToolbarButton(self.toolBar)
@@ -652,17 +650,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
         self.btnComments.setCheckable(True)
         self.btnComments.toggled.connect(self.wdgSidebar.setVisible)
         self.btnComments.setDisabled(True)
-        self.btnComments.setToolTip(t('Comments are not available yet'))
+        self.btnComments.setToolTip('Comments are not available yet')
         self.btnComments.installEventFilter(InstantTooltipEventFilter(self.btnComments))
         self.btnComments.setHidden(True)
 
         self.seriesLabel = SeriesLabel(transparent=True)
         self.menu = MenuWidget(self.seriesLabel)
-        self.menu.addAction(action(t('Visit series page'), icon=IconRegistry.series_icon(), slot=self._select_series))
+        self.menu.addAction(action('Visit series page', icon=IconRegistry.series_icon(), slot=self._select_series))
         self.menu.addSeparator()
         self.menu.addAction(
-            action(t('Import characters'), icon=IconRegistry.character_icon(), slot=self._import_characters))
-        self.menu.addAction(action(t('Import locations'), icon=IconRegistry.location_icon(), slot=self._import_locations))
+            action('Import characters', icon=IconRegistry.character_icon(), slot=self._import_characters))
+        self.menu.addAction(action('Import locations', icon=IconRegistry.location_icon(), slot=self._import_locations))
         pointy(self.seriesLabel)
         decr_icon(self.seriesLabel, 2)
 
@@ -706,8 +704,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
             self._on_view_changed()
 
     def _change_project_dir(self):
-        if not asked(t("Your project directory is where all your novels are stored in one place."),
-                     t("Do you want to change your project directory?"), btnConfirmText=t('Change directory')):
+        if not asked("Your project directory is where all your novels are stored in one place.",
+                     "Do you want to change your project directory?", btnConfirmText='Change directory'):
             return
         workspace = select_new_project_directory()
         if workspace:
@@ -968,7 +966,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
 
     def _import_locations(self):
         if not app_env.profile().get('world-building', False):
-            PremiumMessagePopup.popup(t('Locations'), 'mdi.globe-model', 'https://plotlyst.com/docs/world-building/')
+            PremiumMessagePopup.popup('Locations', 'mdi.globe-model', 'https://plotlyst.com/docs/world-building/')
             return
         if self.novel and self.world_building_view:
             self.world_building_view.import_from_series()
