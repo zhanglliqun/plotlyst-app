@@ -64,8 +64,8 @@ class StorylineVillainCard(BackstoryCard):
         self.setMinimumWidth(400)
 
     @overrides
-    def _frameColor(self):
-        return antagonist_role.icon_color
+    def _frameColor(self) -> str:
+        return antagonist_role.icon_color if antagonist_role.icon_color else '#2e5266'
 
 
 class StorylineVillainEvolutionWidget(TimelineLinearWidget):

@@ -210,7 +210,7 @@ class DynamicPlotPrinciplesWidget(OutlineTimelineWidget):
                 wdg.refreshCharacters()
 
     @overrides
-    def _newBeatWidget(self, item: DynamicPlotPrinciple) -> OutlineItemWidget:
+    def _newBeatWidget(self, item) -> OutlineItemWidget:
         wdg = DynamicPlotMultiPrincipleWidget(self.novel, item, self.group.type)
         wdg.removed.connect(self._beatRemoved)
         return wdg
