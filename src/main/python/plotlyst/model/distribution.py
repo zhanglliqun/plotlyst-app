@@ -44,7 +44,7 @@ class CharactersScenesDistributionTableModel(DistributionModel):
             return super(CharactersScenesDistributionTableModel, self).data(index, role=self.SortRole)
 
     @overrides
-    def _match_by_row_col(self, row: int, column: int):
+    def _match_by_row_col(self, row: int, column: int) -> bool:
         in_char = self.novel.characters[row] in self.novel.scenes[column - 2].characters
         pov = self.novel.characters[row] == self.novel.scenes[column - 2].pov
         return in_char or pov
@@ -75,7 +75,7 @@ class GoalScenesDistributionTableModel(DistributionModel):
                 return IconRegistry.goal_icon()
 
     @overrides
-    def _match_by_row_col(self, row: int, column: int):
+    def _match_by_row_col(self, row: int, column: int) -> bool:
         for agenda in self.novel.scenes[column - 2].agency:
             if agenda.character_id:
                 character = agenda.character(self.novel)
@@ -145,7 +145,7 @@ class TagScenesDistributionTableModel(DistributionModel):
                 return QBrush(QColor(tag.color_hexa))
 
     @overrides
-    def _match_by_row_col(self, row: int, column: int):
+    def _match_by_row_col(self, row: int, column: int) -> bool:
         return self._tag(row) in self.novel.scenes[column - 2].tags(self.novel)
 
     def _tag(self, row: int) -> Tag:

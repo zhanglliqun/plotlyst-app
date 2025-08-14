@@ -378,11 +378,10 @@ class StoryStructureOutline(OutlineTimelineWidget):
     def attachBeatsPreview(self, beats: BeatsPreview):
         self._beatsPreview = beats
 
-    @overrides
-    def setStructure(self, structure: StoryStructure):
+    def setStructure(self, items: StoryStructure):
         self.clear()
-        self._structure = structure
-        self._items = structure.beats
+        self._structure = items
+        self._items = items.beats
 
         for item in self._structure.sorted_beats():
             if item.type == StoryBeatType.BEAT and item.enabled:
@@ -399,7 +398,7 @@ class StoryStructureOutline(OutlineTimelineWidget):
             event.ignore()
 
     @overrides
-    def _newBeatWidget(self, item: StoryBeat) -> StoryStructureBeatWidget:
+    def _newBeatWidget(self, item) -> StoryStructureBeatWidget:
         widget = StoryStructureBeatWidget(item, self._structure, parent=self)
         widget.attachStructurePreview(self._structureTimeline)
         widget.changed.connect(self.beatChanged)
