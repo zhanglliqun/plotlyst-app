@@ -165,7 +165,7 @@ class CharacterArcInfo:
 @dataclass
 class ScenePlotReferenceInfo:
     plot_id: uuid.UUID
-    data: ScenePlotReferenceData = ScenePlotReferenceData()
+    data: ScenePlotReferenceData = field(default_factory=ScenePlotReferenceData)
 
 
 @dataclass
@@ -249,7 +249,7 @@ class NovelInfo:
 class ProjectNovelInfo:
     title: str
     id: uuid.UUID
-    lang_settings: LanguageSettings = LanguageSettings()
+    lang_settings: LanguageSettings = field(default_factory=LanguageSettings)
     import_origin: Optional[ImportOrigin] = None
     subtitle: str = field(default='', metadata=config(exclude=exclude_if_empty))
     icon: str = field(default='', metadata=config(exclude=exclude_if_empty))

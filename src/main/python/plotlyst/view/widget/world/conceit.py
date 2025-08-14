@@ -198,14 +198,13 @@ class ConceitsTreeView(ItemBasedTreeView):
         self._rootNode.select()
         self._selectionChanged(self._rootNode, True)
 
-    @overrides
-    def _emitSelectionChanged(self, conceit: WorldConceit):
-        if conceit == self._root:
+    def _emitSelectionChanged(self, item):
+        if item == self._root:
             self.rootSelected.emit()
-        elif isinstance(self._nodes[conceit], ConceitTypeNode):
-            self.conceitTypeSelected.emit(conceit.type)
+        elif isinstance(self._nodes[item], ConceitTypeNode):
+            self.conceitTypeSelected.emit(item.type)
         else:
-            self.conceitSelected.emit(conceit)
+            self.conceitSelected.emit(item)
 
     @overrides
     def _mimeType(self) -> str:
@@ -216,8 +215,8 @@ class ConceitsTreeView(ItemBasedTreeView):
         return self._world.conceits
 
     @overrides
-    def _node(self, conceit: WorldConceit) -> ConceitNode:
-        return ConceitNode(conceit, settings=self._settings)
+    def _node(self, item) -> ConceitNode:
+        return ConceitNode(item, settings=self._settings)
 
     @overrides
     def _save(self):
@@ -245,9 +244,9 @@ class ConceitsTreeView(ItemBasedTreeView):
         self._save()
 
     @overrides
-    def _initNode(self, conceit: WorldConceit) -> ConceitNode:
-        node = ConceitNode(conceit, readOnly=self._readOnly, settings=self._settings)
-        self._nodes[conceit] = node
+    def _initNode(self, item) -> ConceitNode:
+        node = ConceitNode(item, readOnly=self._readOnly, settings=self._settings)
+        self._nodes[item] = node
         node.selectionChanged.connect(partial(self._selectionChanged, node))
         node.added.connect(partial(self._addConceitUnder, node))
         node.deleted.connect(partial(self._deleteConceit, node))

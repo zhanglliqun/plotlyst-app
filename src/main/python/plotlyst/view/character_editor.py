@@ -36,6 +36,7 @@ from plotlyst.env import app_env
 from plotlyst.event.core import EventListener, Event
 from plotlyst.event.handler import event_dispatchers, global_event_dispatcher
 from plotlyst.events import NovelAboutToSyncEvent
+from plotlyst.i18n import t
 from plotlyst.resources import resource_registry
 from plotlyst.service.persistence import RepositoryPersistenceManager
 from plotlyst.service.tour import TourService
@@ -70,7 +71,7 @@ class CharacterEditor(QObject, EventListener):
         self._btnMenu = DotsMenuButton()
         self._btnMenu.installEventFilter(OpacityEventFilter(self._btnMenu))
         menu = MenuWidget(self._btnMenu)
-        menu.addAction(action('Edit displayed name', IconRegistry.from_name('mdi.badge-account-outline'),
+        menu.addAction(action(t('Edit displayed name'), IconRegistry.from_name('mdi.badge-account-outline'),
                               self._edit_displayed_name))
         self.ui.wdgToolbar.layout().addWidget(self._btnMenu, alignment=Qt.AlignmentFlag.AlignRight)
 
@@ -132,7 +133,7 @@ class CharacterEditor(QObject, EventListener):
 
         self._lineOccupation = QLineEdit()
         self._lineOccupation.setProperty('rounded', True)
-        self._lineOccupation.setPlaceholderText('Fill out occupation')
+        self._lineOccupation.setPlaceholderText(t('Fill out occupation'))
         self._lineOccupation.textEdited.connect(self._occupation_changed)
         menu = MenuWidget(self.ui.btnOccupation)
         menu.addWidget(self._lineOccupation)
@@ -152,7 +153,7 @@ class CharacterEditor(QObject, EventListener):
 
         set_tab_visible(self.ui.tabAttributes, self.ui.tabBigFive, False)
 
-        self.ui.wdgAvatar.btnAvatar.setToolTip('Character avatar. Click to add an image')
+        self.ui.wdgAvatar.btnAvatar.setToolTip(t('Character avatar. Click to add an image'))
         self.ui.wdgAvatar.avatarUpdated.connect(self._avatar_updated)
         self.ui.wdgAvatar.setFixedSize(180, 180)
 
@@ -170,10 +171,10 @@ class CharacterEditor(QObject, EventListener):
         apply_bg_image(self.ui.scrollAreaBackstoryContents, resource_registry.cover1)
         if not app_env.profile().get('backstory', False):
             apply_bg_image(self.ui.tabBackstoryDummy, resource_registry.cover1)
-            PremiumOverlayWidget(self.ui.tabBackstoryDummy, 'Character backstory',
+            PremiumOverlayWidget(self.ui.tabBackstoryDummy, t('Character backstory'),
                                  icon='fa5s.archive',
                                  alt_link='https://plotlyst.com/docs/characters/', preview=BACKSTORY_PREVIEW)
-            PremiumOverlayWidget(self.ui.tabBinder, 'Character codex',
+            PremiumOverlayWidget(self.ui.tabBinder, t('Character codex'),
                                  icon='ri.typhoon-fill',
                                  alt_link='https://plotlyst.com/docs/characters/', preview=CODEX_PREVIEW)
 
@@ -264,8 +265,8 @@ class CharacterEditor(QObject, EventListener):
 
     def _role_changed(self, role: SelectionItem):
         def apply_profile():
-            if asked('For minor characters, a simplified character profile is recommended.',
-                     'Apply a new character profile for this minor character?', 'Apply (recommended)', 'No'):
+            if asked(t('For minor characters, a simplified character profile is recommended.'),
+                     t('Apply a new character profile for this minor character?'), t('Apply (recommended)'), t('No')):
                 self.profile.applyMinorRoleSettings()
 
         self._roleMenu.close()
@@ -292,7 +293,7 @@ class CharacterEditor(QObject, EventListener):
         self._ageEditor.reset()
         italic(self.ui.btnAge)
         bold(self.ui.btnAge, False)
-        self.ui.btnAge.setText('Age')
+        self.ui.btnAge.setText(t('Age'))
 
     def _age_infinite_toggled(self, toggled: bool):
         if toggled:
@@ -316,7 +317,7 @@ class CharacterEditor(QObject, EventListener):
     def _reset_occupation(self):
         italic(self.ui.btnOccupation)
         bold(self.ui.btnOccupation, False)
-        self.ui.btnOccupation.setText('Occupation')
+        self.ui.btnOccupation.setText(t('Occupation'))
         self._lineOccupation.clear()
 
     def _display_role(self):
@@ -330,7 +331,7 @@ class CharacterEditor(QObject, EventListener):
 
     def _reset_role(self):
         self.ui.btnRole.setIcon(IconRegistry.from_name('fa5s.chess-bishop', 'grey'))
-        self.ui.btnRole.setText('Role')
+        self.ui.btnRole.setText(t('Role'))
         self.ui.btnRole.initStyleSheet()
         self._btnRoleEventFilter.enterOpacity = 1.0
 

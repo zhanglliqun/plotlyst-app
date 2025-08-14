@@ -221,8 +221,11 @@ class PlotValueLabel(SelectionItemLabel):
             self._versusIcon.setVisible(True if self.value.negative else False)
 
     @overrides
-    def _borderColor(self):
-        return self.item.icon_color
+    def _borderColor(self) -> str:
+        if self.item.icon_color:
+            return self.item.icon_color
+        else:
+            return '#2e5266'
 
 
 class ScenePlotValueLabel(SelectionItemLabel):
@@ -246,7 +249,7 @@ class CharacterGoalLabel(SelectionItemLabel):
         self.layout().insertWidget(0, self.lblGoal)
 
     @overrides
-    def _borderColor(self):
+    def _borderColor(self) -> str:
         return 'darkBlue'
 
 

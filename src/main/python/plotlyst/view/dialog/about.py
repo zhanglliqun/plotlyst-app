@@ -22,6 +22,7 @@ from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QLabel, QWidget, QApplication
 from qthandy import hbox, spacer
 
+from plotlyst.i18n import t
 from plotlyst.resources import resource_registry
 from plotlyst.version import plotlyst_product_version
 from plotlyst.view.common import push_btn, label
@@ -37,17 +38,18 @@ class AboutDialog(PopupDialog):
         self.wdgBanner.setProperty('banner-bg', True)
         self.lblBanner = QLabel()
         self.lblBanner.setPixmap(QPixmap(resource_registry.banner))
-        self.btnClose = push_btn(text='Close', properties=['confirm', 'cancel'])
+        self.btnClose = push_btn(text=t('Close'), properties=['confirm', 'cancel'])
         self.btnClose.clicked.connect(self.accept)
         hbox(self.wdgBanner).addWidget(self.lblBanner, alignment=Qt.AlignmentFlag.AlignCenter)
 
         version = QApplication.instance().applicationVersion()
 
         self.frame.layout().addWidget(self.wdgBanner)
-        self.frame.layout().addWidget(label("Plotlyst is an indie software developed by Zsolt Kovari", h4=True))
-        self.frame.layout().addWidget(label('Copyright (C) 2021-2025  Zsolt Kovari', description=True))
-        self.frame.layout().addWidget(group(label(f'Version: {version}', description=True, incr_font_diff=2), spacer(),
-                                            label(f'Product version: {plotlyst_product_version}', description=True)))
+        self.frame.layout().addWidget(label(t("Plotlyst is an indie software developed by Zsolt Kovari"), h4=True))
+        self.frame.layout().addWidget(label(t('Copyright (C) 2021-2025  Zsolt Kovari'), description=True))
+        self.frame.layout().addWidget(
+            group(label(f'{t("Version:")} {version}', description=True, incr_font_diff=2), spacer(),
+                  label(f'{t("Product version:")} {plotlyst_product_version}', description=True)))
         self.frame.layout().addWidget(self.btnClose, alignment=Qt.AlignmentFlag.AlignRight)
 
     def display(self):

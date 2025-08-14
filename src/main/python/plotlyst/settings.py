@@ -80,6 +80,12 @@ class AppSettings:
     def set_worldbuilding_editor_max_width(self, value: int):
         self._settings.setValue(self.WORLDBUILDING_EDITOR_MAX_WIDTH, value)
 
+    def language(self) -> Optional[str]:
+        return self._settings.value('language')
+
+    def set_language(self, value: str):
+        self._settings.setValue('language', value)
+
 
 settings = AppSettings()
 

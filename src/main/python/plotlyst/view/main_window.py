@@ -49,6 +49,7 @@ from plotlyst.events import NovelDeletedEvent, \
     NovelWorldBuildingToggleEvent, NovelCharactersToggleEvent, NovelScenesToggleEvent, NovelDocumentsToggleEvent, \
     NovelManagementToggleEvent, NovelManuscriptToggleEvent, SocialSnapshotRequested, SelectNovelEvent, ShowRoadmapEvent, \
     PreviewFeatureEvent
+from plotlyst.i18n import t
 from plotlyst.resources import resource_manager, ResourceType, ResourceDownloadedEvent
 from plotlyst.service.cache import acts_registry, entities_registry
 from plotlyst.service.common import try_shutdown_to_apply_change
@@ -105,7 +106,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
         if app_env.is_prod():
             self.setWindowState(Qt.WindowState.WindowMaximized)
 
-        self.setWindowTitle(app_env.profile().get('title', 'Plotlyst'))
+        self.setWindowTitle(app_env.profile().get('title', t('Plotlyst')))
         self._detached_windows: List[DetachedWindow] = []
 
         palette = QApplication.palette()
@@ -239,7 +240,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
 
         if self._threadpool.activeThreadCount():
             max_ = self._threadpool.activeThreadCount()
-            progress = QProgressDialog('Wait until background tasks are finished...', 'Shut down anyway', 0,
+            progress = QProgressDialog(t('Wait until background tasks are finished...'), t('Shut down anyway'), 0,
                                        self._threadpool.activeThreadCount(), parent=self.centralwidget)
             progress.forceShow()
             progress.setWindowModality(Qt.WindowModality.WindowModal)
@@ -296,7 +297,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
     @overrides
     def resizeEvent(self, event: QResizeEvent) -> None:
         if app_env.is_dev():
-            emit_info(f'Size: {event.size().width()}:{event.size().height()}')
+            emit_info(f'{t("Size:")} {event.size().width()}:{event.size().height()}')
 
     @overrides
     def event_received(self, event: Event):
@@ -629,7 +630,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
         self.toolBar.setContextMenuPolicy(Qt.ContextMenuPolicy.PreventContextMenu)
 
         self.home_mode = ToolbarButton(self.toolBar)
-        self.home_mode.setText('Home')
+        self.home_mode.setText(t('Home'))
         self.home_mode.setIcon(IconRegistry.home_icon(color_on='#240046'))
 
         self.outline_mode = ToolbarButton(self.toolBar)
@@ -650,17 +651,18 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
         self.btnComments.setCheckable(True)
         self.btnComments.toggled.connect(self.wdgSidebar.setVisible)
         self.btnComments.setDisabled(True)
-        self.btnComments.setToolTip('Comments are not available yet')
+        self.btnComments.setToolTip(t('Comments are not available yet'))
         self.btnComments.installEventFilter(InstantTooltipEventFilter(self.btnComments))
         self.btnComments.setHidden(True)
 
         self.seriesLabel = SeriesLabel(transparent=True)
         self.menu = MenuWidget(self.seriesLabel)
-        self.menu.addAction(action('Visit series page', icon=IconRegistry.series_icon(), slot=self._select_series))
+        self.menu.addAction(action(t('Visit series page'), icon=IconRegistry.series_icon(), slot=self._select_series))
         self.menu.addSeparator()
         self.menu.addAction(
-            action('Import characters', icon=IconRegistry.character_icon(), slot=self._import_characters))
-        self.menu.addAction(action('Import locations', icon=IconRegistry.location_icon(), slot=self._import_locations))
+            action(t('Import characters'), icon=IconRegistry.character_icon(), slot=self._import_characters))
+        self.menu.addAction(
+            action(t('Import locations'), icon=IconRegistry.location_icon(), slot=self._import_locations))
         pointy(self.seriesLabel)
         decr_icon(self.seriesLabel, 2)
 
@@ -704,8 +706,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
             self._on_view_changed()
 
     def _change_project_dir(self):
-        if not asked("Your project directory is where all your novels are stored in one place.",
-                     "Do you want to change your project directory?", btnConfirmText='Change directory'):
+        if not asked(t("Your project directory is where all your novels are stored in one place."),
+                     t("Do you want to change your project directory?"), btnConfirmText=t('Change directory')):
             return
         workspace = select_new_project_directory()
         if workspace:
@@ -966,7 +968,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, EventListener):
 
     def _import_locations(self):
         if not app_env.profile().get('world-building', False):
-            PremiumMessagePopup.popup('Locations', 'mdi.globe-model', 'https://plotlyst.com/docs/world-building/')
+            PremiumMessagePopup.popup(t('Locations'), 'mdi.globe-model', 'https://plotlyst.com/docs/world-building/')
             return
         if self.novel and self.world_building_view:
             self.world_building_view.import_from_series()

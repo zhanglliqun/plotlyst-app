@@ -30,6 +30,7 @@ from qthandy import flow, transparent, pointy, grid, vline, line, translucent, d
 from qtmenu import MenuWidget
 
 from plotlyst.common import RELAXED_WHITE_COLOR, PLOTLYST_SECONDARY_COLOR, RED_COLOR, PLOTLYST_TERTIARY_COLOR
+from plotlyst.i18n import t
 from plotlyst.model.common import proxy
 from plotlyst.view.common import ButtonPressResizeEventFilter, tool_btn, push_btn, shadow, action, restyle, \
     rounded_pixmap, label, calculate_resized_dimensions
@@ -91,7 +92,7 @@ class ColorPicker(QWidget):
                 self.layout().addWidget(btn)
 
         self._btnCustomColor = tool_btn(IconRegistry.from_name('msc.symbol-color'), transparent_=True,
-                                        tooltip='Select a custom color')
+                                        tooltip=t('Select a custom color'))
         self._btnCustomColor.clicked.connect(self._customColorClicked)
         self.layout().addWidget(vline())
         self.layout().addWidget(self._btnCustomColor)
@@ -179,22 +180,22 @@ class IconSelectorWidget(QWidget, Ui_IconsSelectorWidget):
         self.btnFilterIcon.setIcon(IconRegistry.from_name('mdi.magnify'))
 
         self.btnPeople.setIcon(IconRegistry.from_name('mdi.account', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnPeople.setToolTip('People and emotions')
+        self.btnPeople.setToolTip(t('People and emotions'))
         self.btnFood.setIcon(IconRegistry.from_name('fa5s.ice-cream', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnFood.setToolTip('Food and beverage')
+        self.btnFood.setToolTip(t('Food and beverage'))
         self.btnNature.setIcon(IconRegistry.from_name('mdi.nature', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnNature.setToolTip('Nature')
+        self.btnNature.setToolTip(t('Nature'))
         self.btnSports.setIcon(IconRegistry.from_name('fa5s.football-ball', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnSports.setToolTip('Sports')
+        self.btnSports.setToolTip(t('Sports'))
         self.btnObjects.setIcon(IconRegistry.from_name('fa5.lightbulb', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnObjects.setToolTip('Objects')
+        self.btnObjects.setToolTip(t('Objects'))
         self.btnPlaces.setIcon(IconRegistry.from_name('ei.globe', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnPlaces.setToolTip('Places and travel')
+        self.btnPlaces.setToolTip(t('Places and travel'))
         self.btnCharacters.setIcon(
             IconRegistry.from_name('mdi6.alphabetical-variant', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnCharacters.setToolTip('Numbers and characters')
+        self.btnCharacters.setToolTip(t('Numbers and characters'))
         self.btnSymbols.setIcon(IconRegistry.from_name('mdi.symbol', color_on=PLOTLYST_SECONDARY_COLOR))
-        self.btnSymbols.setToolTip('Symbols')
+        self.btnSymbols.setToolTip(t('Symbols'))
         self.btnAll.setChecked(True)
 
         self.colorPicker = ColorPicker(self)
@@ -234,21 +235,21 @@ class IconSelectorWidget(QWidget, Ui_IconsSelectorWidget):
     def _filterToggled(self):
         self._proxy.setFilterRole(self._Model.IconTypeRole)
         if self.btnPeople.isChecked():
-            self._proxy.setFilterFixedString('People')
+            self._proxy.setFilterFixedString(t('People'))
         elif self.btnFood.isChecked():
-            self._proxy.setFilterFixedString('Food')
+            self._proxy.setFilterFixedString(t('Food'))
         elif self.btnNature.isChecked():
-            self._proxy.setFilterFixedString('Animals & Nature')
+            self._proxy.setFilterFixedString(t('Animals & Nature'))
         elif self.btnSports.isChecked():
-            self._proxy.setFilterFixedString('Sports & Activities')
+            self._proxy.setFilterFixedString(t('Sports & Activities'))
         elif self.btnPlaces.isChecked():
-            self._proxy.setFilterFixedString('Travel & Places')
+            self._proxy.setFilterFixedString(t('Travel & Places'))
         elif self.btnObjects.isChecked():
-            self._proxy.setFilterFixedString('Objects')
+            self._proxy.setFilterFixedString(t('Objects'))
         elif self.btnCharacters.isChecked():
-            self._proxy.setFilterFixedString('Numbers and Characters')
+            self._proxy.setFilterFixedString(t('Numbers and Characters'))
         elif self.btnSymbols.isChecked():
-            self._proxy.setFilterFixedString('Symbols')
+            self._proxy.setFilterFixedString(t('Symbols'))
         elif self.btnAll.isChecked():
             self._proxy.setFilterFixedString('')
 
@@ -310,7 +311,7 @@ class IconSelectorDialog(PopupDialog):
         self.selector.setColor(color)
         self.selector.iconSelected.connect(self._icon_selected)
 
-        self.btnClose = push_btn(text='Close', properties=['confirm', 'cancel'])
+        self.btnClose = push_btn(text=t('Close'), properties=['confirm', 'cancel'])
         self.btnClose.clicked.connect(self.reject)
 
         self.frame.layout().addWidget(self.btnReset, alignment=Qt.AlignmentFlag.AlignRight)
@@ -391,7 +392,7 @@ class IconPickerMenu(MenuWidget):
 
         self.addWidget(self.picker)
         self.addSeparator()
-        self.addAction(action('Custom icon...', IconRegistry.icons_icon(), slot=self._customIconTriggered))
+        self.addAction(action(t('Custom icon...'), IconRegistry.icons_icon(), slot=self._customIconTriggered))
 
     def _customIconTriggered(self):
         result = IconSelectorDialog.popup(pickColor=False)
@@ -432,12 +433,12 @@ class ImageCropDialog(PopupDialog):
             btn.clicked.connect(partial(self._cropFrame.setColor, color))
             wdgFrameColors.layout().addWidget(btn)
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm', 'positive'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm', 'positive'])
         self.btnConfirm.clicked.connect(self.accept)
-        self.btnCancel = push_btn(text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
-        self.frame.layout().addWidget(label('Crop image', h4=True), alignment=Qt.AlignmentFlag.AlignCenter)
+        self.frame.layout().addWidget(label(t('Crop image'), h4=True), alignment=Qt.AlignmentFlag.AlignCenter)
         self.frame.layout().addWidget(self.lblPreview, alignment=Qt.AlignmentFlag.AlignCenter)
         self.frame.layout().addWidget(line())
         self.frame.layout().addWidget(wdgFrameColors, alignment=Qt.AlignmentFlag.AlignCenter)

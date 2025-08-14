@@ -140,7 +140,7 @@ class GlossaryItemsEditorWidget(ItemsEditorWidget):
         self.toolbar.layout().addWidget(self.hintLbl, alignment=Qt.AlignmentFlag.AlignRight)
 
     @overrides
-    def _itemDisplayText(self, item: GlossaryItem) -> str:
+    def _itemDisplayText(self, item) -> str:
         return item.key
 
 

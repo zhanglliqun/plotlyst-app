@@ -31,6 +31,7 @@ from qthandy.filter import DisabledClickEventFilter, OpacityEventFilter
 from plotlyst.common import PLOTLYST_SECONDARY_COLOR
 from plotlyst.core.domain import PlotValue
 from plotlyst.core.help import plot_value_help
+from plotlyst.i18n import t
 from plotlyst.view.common import link_editor_to_btn, ButtonPressResizeEventFilter, set_tab_icon
 from plotlyst.view.generated.plot_value_editor_dialog_ui import Ui_PlotValueEditorDialog
 from plotlyst.view.icons import IconRegistry
@@ -70,20 +71,20 @@ class _TemplatePlotValueButton(QPushButton):
         pointy(self)
 
 
-love_value = PlotValue('Love', negative='Hate', icon='ei.heart', icon_color='#d1495b')
-life_value = PlotValue('Life', negative='Death', icon='mdi.pulse', icon_color='#ef233c')
-truth_value = PlotValue('Truth', negative='Lie', icon='mdi.scale-balance', icon_color='#5390d9')
-wealth_value = PlotValue('Wealth', negative='Poverty', icon='fa5s.hand-holding-usd', icon_color='#e9c46a')
-justice_value = PlotValue('Justice', negative='Injustice', icon='fa5s.gavel', icon_color='#a68a64')
-maturity_value = PlotValue('Maturity', negative='Immaturity', icon='fa5s.seedling', icon_color='#95d5b2')
-esteem_value = PlotValue('Esteem', negative='Disrespect', icon='mdi.account-star', icon_color='#f72585')
-morality_value = PlotValue('Morality', negative='Immorality', icon='ph.scales-bold', icon_color='#560bad')
-loyalty_value = PlotValue('Loyalty', negative='Betrayal', icon='fa5.handshake', icon_color='#5390d9')
-empathy_value = PlotValue('Empathy', icon_color='#FFB6C1')
-survival_value = PlotValue('Survival', icon_color='#F4A460')
-power_value = PlotValue('Power', icon_color='#FF0000')
-freedom_value = PlotValue('Freedom', icon_color='#023e8a')
-unity_value = PlotValue('Unity', icon_color='#52b69a')
+love_value = PlotValue(t('Love'), negative=t('Hate'), icon='ei.heart', icon_color='#d1495b')
+life_value = PlotValue(t('Life'), negative=t('Death'), icon='mdi.pulse', icon_color='#ef233c')
+truth_value = PlotValue(t('Truth'), negative=t('Lie'), icon='mdi.scale-balance', icon_color='#5390d9')
+wealth_value = PlotValue(t('Wealth'), negative=t('Poverty'), icon='fa5s.hand-holding-usd', icon_color='#e9c46a')
+justice_value = PlotValue(t('Justice'), negative=t('Injustice'), icon='fa5s.gavel', icon_color='#a68a64')
+maturity_value = PlotValue(t('Maturity'), negative=t('Immaturity'), icon='fa5s.seedling', icon_color='#95d5b2')
+esteem_value = PlotValue(t('Esteem'), negative=t('Disrespect'), icon='mdi.account-star', icon_color='#f72585')
+morality_value = PlotValue(t('Morality'), negative=t('Immorality'), icon='ph.scales-bold', icon_color='#560bad')
+loyalty_value = PlotValue(t('Loyalty'), negative=t('Betrayal'), icon='fa5.handshake', icon_color='#5390d9')
+empathy_value = PlotValue(t('Empathy'), icon_color='#FFB6C1')
+survival_value = PlotValue(t('Survival'), icon_color='#F4A460')
+power_value = PlotValue(t('Power'), icon_color='#FF0000')
+freedom_value = PlotValue(t('Freedom'), icon_color='#023e8a')
+unity_value = PlotValue(t('Unity'), icon_color='#52b69a')
 
 popular_plot_value_templates = [
     love_value,
@@ -104,7 +105,7 @@ foundational_plot_value_templates = [
     truth_value,
     survival_value,
     power_value,
-    PlotValue('Victory', icon_color='#ffbe0b'),
+    PlotValue(t('Victory'), icon_color='#ffbe0b'),
     freedom_value
 
 ]
@@ -112,53 +113,53 @@ societal_plot_value_templates = [
     justice_value,
     unity_value,
     wealth_value,
-    PlotValue('Poverty', icon_color='#8B4513'),
-    PlotValue('Prejudice', icon_color='#800000'),
-    PlotValue('Ethics', icon_color='#008000'),
-    PlotValue('Tradition', icon_color='#A0522D'),
-    PlotValue('Tolerance', icon_color='#FFD700'),
-    PlotValue('Diversity', icon_color='#800080'),
-    PlotValue('Innovation', icon_color='#5e548e'),
-    PlotValue('Education', icon_color='#008080'),
+    PlotValue(t('Poverty'), icon_color='#8B4513'),
+    PlotValue(t('Prejudice'), icon_color='#800000'),
+    PlotValue(t('Ethics'), icon_color='#008000'),
+    PlotValue(t('Tradition'), icon_color='#A0522D'),
+    PlotValue(t('Tolerance'), icon_color='#FFD700'),
+    PlotValue(t('Diversity'), icon_color='#800080'),
+    PlotValue(t('Innovation'), icon_color='#5e548e'),
+    PlotValue(t('Education'), icon_color='#008080'),
 ]
 relational_plot_value_templates = [
     love_value,
-    PlotValue('Trust', icon_color='#34a0a4'),
-    PlotValue('Friendship', icon_color='#457b9d'),
-    PlotValue('Cooperation', icon_color='#32CD32'),
-    PlotValue('Communication', icon_color='#000080'),
+    PlotValue(t('Trust'), icon_color='#34a0a4'),
+    PlotValue(t('Friendship'), icon_color='#457b9d'),
+    PlotValue(t('Cooperation'), icon_color='#32CD32'),
+    PlotValue(t('Communication'), icon_color='#000080'),
     power_value,
     unity_value,
     loyalty_value,
-    PlotValue('Responsibility', icon_color='#FF4500'),
-    PlotValue('Respect', icon_color='#FFFF00'),
+    PlotValue(t('Responsibility'), icon_color='#FF4500'),
+    PlotValue(t('Respect'), icon_color='#FFFF00'),
     empathy_value,
-    PlotValue('Duty', icon_color='#696969'),
-    PlotValue('Forgiveness', icon_color='#FF1493')
+    PlotValue(t('Duty'), icon_color='#696969'),
+    PlotValue(t('Forgiveness'), icon_color='#FF1493')
 ]
 
 personal_plot_value_templates = [
-    PlotValue('Honor', negative='Dishonor', icon='fa5s.award', icon_color='#40916c'),
-    PlotValue('Success', icon_color='#FFD700'),
-    PlotValue('Kindness', icon_color='#FFC0CB'),
-    PlotValue('Goodness', icon_color='#FF69B4'),
+    PlotValue(t('Honor'), negative=t('Dishonor'), icon='fa5s.award', icon_color='#40916c'),
+    PlotValue(t('Success'), icon_color='#FFD700'),
+    PlotValue(t('Kindness'), icon_color='#FFC0CB'),
+    PlotValue(t('Goodness'), icon_color='#FF69B4'),
     morality_value,
     maturity_value,
     esteem_value,
 
-    PlotValue('Meaning', icon_color='#8A2BE2'),
-    PlotValue('Self-respect', icon_color='#B0C4DE'),
-    PlotValue('Courage', icon_color='#ca6702'),
-    PlotValue('Resilience', icon_color='#2E8B57'),
-    PlotValue('Independence', icon_color='#20B2AA'),
+    PlotValue(t('Meaning'), icon_color='#8A2BE2'),
+    PlotValue(t('Self-respect'), icon_color='#B0C4DE'),
+    PlotValue(t('Courage'), icon_color='#ca6702'),
+    PlotValue(t('Resilience'), icon_color='#2E8B57'),
+    PlotValue(t('Independence'), icon_color='#20B2AA'),
     empathy_value,
-    PlotValue('Compassion', icon_color='#FF4500'),
-    PlotValue('Patience', icon_color='#FFA500'),
-    PlotValue('Wisdom', icon_color='#000080'),
-    PlotValue('Gratitude', icon_color='#DAA520'),
-    PlotValue('Humility', icon_color='#a9def9'),
-    PlotValue('Integrity', icon_color='#000000'),
-    PlotValue('Perseverance', icon_color='#800000'),
+    PlotValue(t('Compassion'), icon_color='#FF4500'),
+    PlotValue(t('Patience'), icon_color='#FFA500'),
+    PlotValue(t('Wisdom'), icon_color='#000080'),
+    PlotValue(t('Gratitude'), icon_color='#DAA520'),
+    PlotValue(t('Humility'), icon_color='#a9def9'),
+    PlotValue(t('Integrity'), icon_color='#000000'),
+    PlotValue(t('Perseverance'), icon_color='#800000'),
 ]
 
 

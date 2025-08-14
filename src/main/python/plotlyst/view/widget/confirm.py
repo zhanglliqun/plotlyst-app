@@ -25,6 +25,7 @@ from PyQt6.QtWidgets import QDialog, QWidget
 from qthandy import hbox, sp, vbox
 
 from plotlyst.common import RELAXED_WHITE_COLOR, DECONSTRUCTIVE_COLOR, PLOTLYST_SECONDARY_COLOR
+from plotlyst.i18n import t
 from plotlyst.view.common import label, push_btn
 from plotlyst.view.icons import IconRegistry
 from plotlyst.view.layout import group
@@ -37,7 +38,7 @@ class ConfirmationResult:
 
 
 class BaseDialog(PopupDialog):
-    def __init__(self, message: str, title: str = 'Confirm?', parent=None):
+    def __init__(self, message: str, title: str = t('Confirm?'), parent=None):
         super().__init__(parent)
         self.wdgText = QWidget()
         vbox(self.wdgText, spacing=6)
@@ -57,9 +58,9 @@ class BaseDialog(PopupDialog):
         self.wdgCenter.layout().addWidget(self.btnReset,
                                           alignment=Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignRight)
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm'])
         self.btnConfirm.clicked.connect(self.accept)
-        self.btnCancel = push_btn(QIcon(), text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(QIcon(), text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
         self.btnCancel.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.btnConfirm.setFocus()
@@ -80,16 +81,16 @@ class BaseDialog(PopupDialog):
 
 
 class ConfirmationDialog(BaseDialog):
-    def __init__(self, message: str, title: str = 'Confirm?', parent=None):
+    def __init__(self, message: str, title: str = t('Confirm?'), parent=None):
         super().__init__(message, title, parent)
 
         self.icon.setIcon(IconRegistry.from_name('ph.warning-circle-fill', DECONSTRUCTIVE_COLOR))
         self.btnConfirm.setProperty('deconstructive', True)
-        self.btnConfirm.setText('Delete')
+        self.btnConfirm.setText(t('Delete'))
         self.btnConfirm.setIcon(IconRegistry.trash_can_icon(RELAXED_WHITE_COLOR))
 
     @classmethod
-    def confirm(cls, message: str, title: str = 'Confirm?') -> bool:
+    def confirm(cls, message: str, title: str = t('Confirm?')) -> bool:
         return cls.popup(message, title).confirmed
 
 
@@ -107,9 +108,9 @@ class QuestionDialog(BaseDialog):
         return cls.popup(message, title, btnConfirmText, btnCancelText).confirmed
 
 
-def confirmed(message: str, title: str = 'Confirm?') -> bool:
+def confirmed(message: str, title: str = t('Confirm?')) -> bool:
     return ConfirmationDialog.confirm(message, title)
 
 
-def asked(message: str, title: str, btnConfirmText: str = 'Confirm', btnCancelText: str = 'Cancel') -> bool:
+def asked(message: str, title: str, btnConfirmText: str = t('Confirm'), btnCancelText: str = t('Cancel')) -> bool:
     return QuestionDialog.ask(message, title, btnConfirmText, btnCancelText)

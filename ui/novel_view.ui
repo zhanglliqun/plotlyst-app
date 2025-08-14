@@ -45,7 +45,7 @@
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>Overview</string>
+       <string tr="true">Overview</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <property name="spacing">
@@ -67,7 +67,7 @@
      </widget>
      <widget class="QWidget" name="tabStructure">
       <attribute name="title">
-       <string>Structure</string>
+       <string tr="true">Structure</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_13">
        <property name="spacing">
@@ -92,7 +92,7 @@
      </widget>
      <widget class="QWidget" name="tabPlot">
       <attribute name="title">
-       <string>Storylines</string>
+       <string tr="true">Storylines</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_12">
        <property name="spacing">
@@ -117,7 +117,7 @@
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>Tags</string>
+       <string tr="true">Tags</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
@@ -174,7 +174,7 @@
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>Settings</string>
+       <string tr="true">Settings</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">

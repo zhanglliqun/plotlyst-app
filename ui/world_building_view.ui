@@ -66,10 +66,10 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="toolTip">
-         <string>Milieu entities</string>
+         <string tr="true">Milieu entities</string>
         </property>
         <property name="text">
-         <string>Milieu</string>
+         <string tr="true">Milieu</string>
         </property>
         <property name="shortcut">
          <string>1</string>
@@ -107,10 +107,10 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="toolTip">
-         <string>Worldbuilding bible with articles</string>
+         <string tr="true">Worldbuilding bible with articles</string>
         </property>
         <property name="text">
-         <string>Worldbuilding bible</string>
+         <string tr="true">Worldbuilding bible</string>
         </property>
         <property name="shortcut">
          <string>1</string>
@@ -141,10 +141,10 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="toolTip">
-         <string>Map</string>
+         <string tr="true">Map</string>
         </property>
         <property name="text">
-         <string>Map</string>
+         <string tr="true">Map</string>
         </property>
         <property name="shortcut">
          <string>3</string>
@@ -175,10 +175,10 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="toolTip">
-         <string>Timeline</string>
+         <string tr="true">Timeline</string>
         </property>
         <property name="text">
-         <string>Timeline</string>
+         <string tr="true">Timeline</string>
         </property>
         <property name="shortcut">
          <string>3</string>
@@ -209,10 +209,10 @@
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="toolTip">
-         <string>Glossary</string>
+         <string tr="true">Glossary</string>
         </property>
         <property name="text">
-         <string>Glossary</string>
+         <string tr="true">Glossary</string>
         </property>
         <property name="shortcut">
          <string>3</string>
@@ -340,7 +340,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Add new article</string>
+             <string tr="true">Add new article</string>
             </property>
             <property name="text">
              <string/>
@@ -547,7 +547,7 @@
                      <item>
                       <widget class="QLineEdit" name="lineName">
                        <property name="placeholderText">
-                        <string>New article</string>
+                        <string tr="true">New article</string>
                        </property>
                       </widget>
                      </item>
@@ -737,7 +737,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Toggle sidebar</string>
+             <string tr="true">Toggle sidebar</string>
             </property>
             <property name="text">
              <string/>
@@ -778,7 +778,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Add new location</string>
+             <string tr="true">Add new location</string>
             </property>
             <property name="text">
              <string/>

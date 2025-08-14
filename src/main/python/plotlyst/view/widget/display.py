@@ -41,6 +41,7 @@ from plotlyst.common import PLOTLYST_TERTIARY_COLOR, RELAXED_WHITE_COLOR, DEFAUL
 from plotlyst.core.domain import WORLD_BUILDING_PREVIEW, ConnectorType, LayoutType, STORYLINES_PREVIEW
 from plotlyst.core.help import mid_revision_scene_structure_help
 from plotlyst.core.template import Role
+from plotlyst.i18n import t
 from plotlyst.core.text import wc
 from plotlyst.env import app_env
 from plotlyst.event.core import emit_global_event
@@ -179,7 +180,7 @@ class WordsDisplay(QLabel):
 
     def setWordCount(self, count: int):
         if count:
-            self._text = f'<html><b>{count:,}</b> word{"s" if count > 1 else ""}'
+            self._text = f'<html><b>{count:,}</b> {t("word")}{"s" if count > 1 else ""}'
             self.setText(self._text)
         else:
             self._text = ''
@@ -193,7 +194,7 @@ class WordsDisplay(QLabel):
 
     def setSecondaryWordCount(self, count: int):
         if count:
-            self.setText(f'{count:,} of {self._text}')
+            self.setText(f'{count:,}{t(" of ")}{self._text}')
         else:
             self.setText(self._text)
 
@@ -371,7 +372,7 @@ class StageRecommendationBadge(QFrame):
 
         hbox(self)
         self.setProperty('revision-badge', True)
-        self.label = label('Recommended stage: Mid-revision', color='#622675')
+        self.label = label(t('Recommended stage: Mid-revision'), color='#622675')
         self.info = HintButton()
         self.info.setHint(mid_revision_scene_structure_help)
 
@@ -394,7 +395,7 @@ class PopupDialog(QDialog):
             hbox(self.frame, 15, 10)
         self.layout().addWidget(self.frame)
 
-        self.btnReset = tool_btn(IconRegistry.close_icon('grey'), tooltip='Cancel', transparent_=True)
+        self.btnReset = tool_btn(IconRegistry.close_icon('grey'), tooltip=t('Cancel'), transparent_=True)
         self.btnReset.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.btnReset.setIconSize(QSize(12, 12))
         self.btnReset.clicked.connect(self.reject)
@@ -476,13 +477,13 @@ def dash_icon() -> QToolButton:
 class TruitySourceWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        ref = push_btn(text='Source: truity.com', properties=['transparent', 'no-menu'])
+        ref = push_btn(text=t('Source: truity.com'), properties=['transparent', 'no-menu'])
         italic(ref)
         decr_font(ref)
         ref_menu = MenuWidget(ref)
-        ref_menu.addSection('Browse personality types and tests on truity')
+        ref_menu.addSection(t('Browse personality types and tests on truity'))
         ref_menu.addSeparator()
-        ref_menu.addAction(action('Visit truity.com', IconRegistry.from_name('fa5s.external-link-alt'),
+        ref_menu.addAction(action(t('Visit truity.com'), IconRegistry.from_name('fa5s.external-link-alt'),
                                   slot=lambda: open_url('https://www.truity.com/')))
         ref.installEventFilter(OpacityEventFilter(ref, 0.8, 0.5))
 
@@ -614,7 +615,7 @@ class ReferencesButton(QPushButton):
         self.installEventFilter(OpacityEventFilter(self, leaveOpacity=0.7))
         pointy(self)
         italic(self)
-        self.setText('References')
+        self.setText(t('References'))
 
         self._menu = MenuWidget(self)
 
@@ -678,7 +679,7 @@ class SeparatorLineWithShadow(QWidget):
 class CopiedTextMessage(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setText('Copied')
+        self.setText(t('Copied'))
         self.setHidden(True)
 
     def trigger(self):
@@ -696,14 +697,14 @@ class _PremiumMessageWidgetBase(QWidget):
         super().__init__(parent)
         vbox(self, 0, 8)
         self.btnUpgrade = push_btn(IconRegistry.from_name('ei.shopping-cart', RELAXED_WHITE_COLOR),
-                                   'Purchase',
-                                   tooltip='Upgrade Plotlyst',
+                                   t('Purchase'),
+                                   tooltip=t('Upgrade Plotlyst'),
                                    properties=['confirm', 'positive'])
         self.btnUpgrade.clicked.connect(lambda: open_url(main_link))
         incr_icon(self.btnUpgrade, 10)
         incr_font(self.btnUpgrade, 6)
 
-        self.title = label(f'{feature} is a premium feature', h2=True, wordWrap=True)
+        self.title = label(f'{feature} {t("is a premium feature")}', h2=True, wordWrap=True)
         self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         if icon:
             iconWdg = Icon()
@@ -712,11 +713,11 @@ class _PremiumMessageWidgetBase(QWidget):
             self.layout().addWidget(iconWdg, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.layout().addWidget(self.title)
-        self.layout().addWidget(label("To use this feature, please purchase Plotlyst.", incr_font_diff=2),
+        self.layout().addWidget(label(t("To use this feature, please purchase Plotlyst."), incr_font_diff=2),
                                 alignment=Qt.AlignmentFlag.AlignCenter)
         if alt_link:
             btnLink = push_btn(IconRegistry.from_name('fa5s.external-link-alt', 'grey'),
-                               'Read more about this feature', transparent_=True)
+                               t('Read more about this feature'), transparent_=True)
             btnLink.installEventFilter(OpacityEventFilter(btnLink, leaveOpacity=0.5))
             decr_font(btnLink)
             decr_icon(btnLink, 2)
@@ -724,7 +725,7 @@ class _PremiumMessageWidgetBase(QWidget):
             self.layout().addWidget(btnLink, alignment=Qt.AlignmentFlag.AlignRight)
         self.layout().addWidget(wrap(self.btnUpgrade, margin_top=10), alignment=Qt.AlignmentFlag.AlignCenter)
 
-        self.btnLinkToAllFeatures = push_btn(IconRegistry.from_name('fa5s.road', 'grey'), 'See roadmap',
+        self.btnLinkToAllFeatures = push_btn(IconRegistry.from_name('fa5s.road', 'grey'), t('See roadmap'),
                                              transparent_=True)
         self.btnLinkToAllFeatures.installEventFilter(OpacityEventFilter(self.btnLinkToAllFeatures, leaveOpacity=0.5))
         self.btnLinkToAllFeatures.clicked.connect(self.visitRoadmap)
@@ -805,13 +806,13 @@ class PremiumOverlayWidget(QFrame):
 
     @staticmethod
     def storylinesOverlay(parent: QWidget) -> 'PremiumOverlayWidget':
-        return PremiumOverlayWidget(parent, 'Storylines',
+        return PremiumOverlayWidget(parent, t('Storylines'),
                                     icon='fa5s.theater-masks',
                                     alt_link='https://plotlyst.com/docs/storylines/', preview=STORYLINES_PREVIEW)
 
     @staticmethod
     def worldbuildingOverlay(parent: QWidget) -> 'PremiumOverlayWidget':
-        return PremiumOverlayWidget(parent, 'World-building',
+        return PremiumOverlayWidget(parent, t('World-building'),
                                     icon='mdi.globe-model',
                                     alt_link='https://plotlyst.com/docs/world-building/',
                                     preview=WORLD_BUILDING_PREVIEW)
@@ -839,7 +840,7 @@ class PlotlystFooter(QWidget):
         hbox(self)
         icon = HighQualityPaintedIcon(IconRegistry.book_icon(PLOTLYST_SECONDARY_COLOR), size=16)
         self.layout().addWidget(icon, alignment=Qt.AlignmentFlag.AlignVCenter)
-        footer = label('plotlyst.com', color='grey', decr_font_diff=2)
+        footer = label(t('plotlyst.com'), color='grey', decr_font_diff=2)
         self.layout().addWidget(wrap(footer, margin_bottom=2))
 
 

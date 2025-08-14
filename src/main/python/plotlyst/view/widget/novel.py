@@ -35,6 +35,7 @@ from plotlyst.common import MAXIMUM_SIZE, PLOTLYST_SECONDARY_COLOR, RELAXED_WHIT
 from plotlyst.core.domain import StoryStructure, Novel, TagType, SelectionItem, Tag, NovelSetting, ScenesView
 from plotlyst.env import app_env
 from plotlyst.event.core import emit_global_event
+from plotlyst.i18n import t
 from plotlyst.events import SelectNovelEvent
 from plotlyst.model.characters_model import CharactersTableModel
 from plotlyst.model.common import SelectionItemsModel
@@ -171,7 +172,7 @@ class StoryStructureSelectorMenu(MenuWidget):
 
     def _fillUpMenu(self):
         self.clear()
-        self.addSection('Select a story structure to be displayed')
+        self.addSection(t('Select a story structure to be displayed'))
         self.addSeparator()
 
         for structure in self._novel.story_structures:
@@ -225,30 +226,32 @@ class NovelCustomizationWizard(QWidget):
         self._updateCounter()
         self.wdgPanelSettings.clicked.connect(self._updateCounter)
         if app_env.profile().get('license_type', 'FREE') != 'FREE':
-            self.btnRecommend = push_btn(IconRegistry.from_name('mdi.trophy-award'), 'Recommend me', transparent_=True)
+            self.btnRecommend = push_btn(IconRegistry.from_name('mdi.trophy-award'), t('Recommend me'),
+                                         transparent_=True)
             menuRecommendation = MenuWidget(self.btnRecommend)
             apply_white_menu(menuRecommendation)
             menuRecommendation.setTooltipDisplayMode(ActionTooltipDisplayMode.DISPLAY_UNDER)
-            menuRecommendation.addSection("Recommend me features if my writing style fits into...")
+            menuRecommendation.addSection(t("Recommend me features if my writing style fits into..."))
             menuRecommendation.addAction(
-                action('Architect', IconRegistry.from_name('fa5s.drafting-compass'),
-                       tooltip='Someone who follows meticulous planning and detailed outlines before writing',
+                action(t('Architect'), IconRegistry.from_name('fa5s.drafting-compass'),
+                       tooltip=t('Someone who follows meticulous planning and detailed outlines before writing'),
                        slot=lambda: self._recommend(WriterType.Architect)))
             menuRecommendation.addAction(
-                action('Planner', IconRegistry.from_name('fa5.calendar-alt'),
-                       tooltip='Someone who enjoys some planning but allows for flexibility',
+                action(t('Planner'), IconRegistry.from_name('fa5.calendar-alt'),
+                       tooltip=t('Someone who enjoys some planning but allows for flexibility'),
                        slot=lambda: self._recommend(WriterType.Planner)))
             menuRecommendation.addAction(action(
-                'Explorer', IconRegistry.from_name('fa5s.binoculars'),
-                tooltip='Someone who enjoys discovering their story as they write with very little directions or planning beforehand',
+                t('Explorer'), IconRegistry.from_name('fa5s.binoculars'),
+                tooltip=t(
+                    'Someone who enjoys discovering their story as they write with very little directions or planning beforehand'),
                 slot=lambda: self._recommend(WriterType.Explorer)))
             menuRecommendation.addAction(
-                action('Intuitive', IconRegistry.from_name('fa5.lightbulb'),
-                       tooltip='Someone who writes based on intuition and inspiration with minimal to no planning',
+                action(t('Intuitive'), IconRegistry.from_name('fa5.lightbulb'),
+                       tooltip=t('Someone who writes based on intuition and inspiration with minimal to no planning'),
                        slot=lambda: self._recommend(WriterType.Intuitive)))
             menuRecommendation.addAction(
-                action('Free spirit', IconRegistry.from_name('mdi.bird'),
-                       tooltip='Someone who enjoys the spontaneity of writing without constraints',
+                action(t('Free spirit'), IconRegistry.from_name('mdi.bird'),
+                       tooltip=t('Someone who enjoys the spontaneity of writing without constraints'),
                        slot=lambda: self._recommend(WriterType.Free_spirit)))
 
             self.wdgTop = QWidget()
@@ -260,14 +263,15 @@ class NovelCustomizationWizard(QWidget):
         self.pagePanels.layout().addWidget(self.wdgPanelSettings)
         self.pagePanels.layout().addWidget(vspacer())
         self.pagePanels.layout().addWidget(
-            label('You can always change these settings later', description=True, decr_font_diff=1),
+            label(t('You can always change these settings later'), description=True, decr_font_diff=1),
             alignment=Qt.AlignmentFlag.AlignRight)
 
-        self.pagePersonality.layout().addWidget(label('Character Personality Types', h3=True),
+        self.pagePersonality.layout().addWidget(label(t('Character Personality Types'), h3=True),
                                                 alignment=Qt.AlignmentFlag.AlignCenter)
         self.pagePersonality.layout().addWidget(line())
         self.pagePersonality.layout().addWidget(label(
-            "Which common personality types and styles would you like to track for your characters? (can be changed later)",
+            t(
+                "Which common personality types and styles would you like to track for your characters? (can be changed later)"),
             description=True, wordWrap=True))
         self._addNovelSetting(NovelSetting.Character_enneagram, self.pagePersonality)
         self._addNovelSetting(NovelSetting.Character_mbti, self.pagePersonality)
@@ -275,11 +279,12 @@ class NovelCustomizationWizard(QWidget):
         self._addNovelSetting(NovelSetting.Character_love_style, self.pagePersonality)
         self.pagePersonality.layout().addWidget(vspacer())
 
-        self.pageScenes.layout().addWidget(label('Scene and Chapter Settings', h3=True),
+        self.pageScenes.layout().addWidget(label(t('Scene and Chapter Settings'), h3=True),
                                            alignment=Qt.AlignmentFlag.AlignCenter)
         if self._novel.import_origin is None or not self._novel.import_origin.sync:
             self.pageScenes.layout().addWidget(label(
-                "Would you like to write scenes and arrange them inside chapters, or work with chapters only? (can be changed later)",
+                t(
+                    "Would you like to write scenes and arrange them inside chapters, or work with chapters only? (can be changed later)"),
                 description=True, wordWrap=True))
             self.pageScenes.layout().addWidget(line())
             self._addNovelSetting(NovelSetting.Scenes_organization, self.pageScenes)
@@ -288,15 +293,15 @@ class NovelCustomizationWizard(QWidget):
 
         self.langSetting = ManuscriptLanguageSettingWidget(self._novel)
         self.langSetting.setMaximumWidth(MAXIMUM_SIZE)
-        self.pageManuscript.layout().addWidget(label('Manuscript Language', h3=True),
+        self.pageManuscript.layout().addWidget(label(t('Manuscript Language'), h3=True),
                                                alignment=Qt.AlignmentFlag.AlignCenter)
         self.pageManuscript.layout().addWidget(line())
         self.pageManuscript.layout().addWidget(label(
-            "Choose your manuscript's language for spellcheck (optional and can be changed later)",
+            t("Choose your manuscript's language for spellcheck (optional and can be changed later)"),
             description=True, wordWrap=True))
         self.pageManuscript.layout().addWidget(self.langSetting, alignment=Qt.AlignmentFlag.AlignCenter)
         self.pageManuscript.layout().addWidget(label(
-            "If your language isn't listed, ignore this step and press Finish",
+            t("If your language isn't listed, ignore this step and press Finish"),
             description=True, decr_font_diff=1), alignment=Qt.AlignmentFlag.AlignRight)
 
     def next(self):
@@ -321,7 +326,7 @@ class NovelCustomizationWizard(QWidget):
 
     def _updateCounter(self):
         toggledSettings = self.wdgPanelSettings.toggledSettings()
-        self.lblCounter.setText(f'<html><i>Selected features: <b>{len(toggledSettings)}/8')
+        self.lblCounter.setText(f'<html><i>{t("Selected features:")} <b>{len(toggledSettings)}/8')
 
         self._novel.prefs.panels.scenes_view = None
         if len(toggledSettings) == 1:
@@ -347,11 +352,11 @@ class NovelCustomizationWizard(QWidget):
 
 
 spice_descriptions = {
-    1: 'Romance with minimal physical intimacy, limited to kissing and hand-holding',
-    2: 'Implied or closed-door content with strong romantic tension but little to no explicit detail',
-    3: 'Some explicit content, but with milder language and less frequent or detailed intimate scenes',
-    4: 'Explicit content with strong language and multiple detailed intimate scenes',
-    5: 'Highly explicit content with multiple detailed intimate scenes. All erotica would belong here',
+    1: t('Romance with minimal physical intimacy, limited to kissing and hand-holding'),
+    2: t('Implied or closed-door content with strong romantic tension but little to no explicit detail'),
+    3: t('Some explicit content, but with milder language and less frequent or detailed intimate scenes'),
+    4: t('Explicit content with strong language and multiple detailed intimate scenes'),
+    5: t('Highly explicit content with multiple detailed intimate scenes. All erotica would belong here'),
 }
 
 
@@ -472,7 +477,7 @@ class GenreSelectorButton(SelectorToggleButton):
         menu = MenuWidget()
         wdg = IconPicker(list(genre_icons[self._name].values()), maxColumn=3, iconSize=28)
         wdg.iconSelected.connect(self._variantSelected)
-        menu.addSection('Variants')
+        menu.addSection(t('Variants'))
         menu.addSeparator()
         menu.addWidget(wdg)
 
@@ -683,7 +688,7 @@ class NovelDescriptorsEditorPopup(PopupDialog):
         self.novel = novel
         self.frame.layout().setSpacing(3)
 
-        self.btnClose = push_btn(text='Close', properties=['confirm', 'cancel'])
+        self.btnClose = push_btn(text=t('Close'), properties=['confirm', 'cancel'])
         self.btnClose.clicked.connect(self.accept)
 
         self.scroll = scroll_area(h_on=False, frameless=True)
@@ -694,25 +699,26 @@ class NovelDescriptorsEditorPopup(PopupDialog):
         self.center.setProperty('white-bg', True)
 
         self.frame.layout().addWidget(self.btnReset, alignment=Qt.AlignmentFlag.AlignRight)
-        self.frame.layout().addWidget(label('Novel Descriptors', h3=True), alignment=Qt.AlignmentFlag.AlignCenter)
+        self.frame.layout().addWidget(label(t('Novel Descriptors'), h3=True),
+                                      alignment=Qt.AlignmentFlag.AlignCenter)
         self.frame.layout().addWidget(self.scroll)
 
-        self.lblStandalone = icon_text('ei.book', 'Standalone')
+        self.lblStandalone = icon_text('ei.book', t('Standalone'))
         self.toggleStandalone = Toggle()
-        self.lblSeries = icon_text('ph.books', 'Series')
+        self.lblSeries = icon_text('ph.books', t('Series'))
         self.toggleSeries = Toggle()
 
         self.wdgBookType = group(self.lblStandalone, self.toggleStandalone, vline(), self.lblSeries, self.toggleSeries,
                                  margin_top=15)
         btngroup = exclusive_buttons(self, self.toggleStandalone, self.toggleSeries, optional=True)
         btngroup.buttonClicked.connect(self._typeSelected)
-        if self.novel.descriptors.type == 'Standalone':
+        if self.novel.descriptors.type == t('Standalone'):
             self.toggleStandalone.setChecked(True)
-        elif self.novel.descriptors.type == 'Series':
+        elif self.novel.descriptors.type == t('Series'):
             self.toggleSeries.setChecked(True)
         self.center.layout().addWidget(self.wdgBookType, alignment=Qt.AlignmentFlag.AlignLeft)
 
-        self._addHeader('Genres', 'mdi.drama-masks', 'Select the primary genres')
+        self._addHeader(t('Genres'), 'mdi.drama-masks', t('Select the primary genres'))
         self.genreSelector = DescriptorLabelSelector(exclusive=False)
         self.genreSelector.setGenres([
             'Fantasy', 'Sci-Fi', 'Romance', 'Mystery', 'Action',
@@ -724,15 +730,15 @@ class NovelDescriptorsEditorPopup(PopupDialog):
         self.genreSelector.selectionChanged.connect(self._genreSelected)
         self.center.layout().addWidget(self.genreSelector)
 
-        self._addHeader('Audience', 'ei.group', 'Select the target audience of your novel')
+        self._addHeader(t('Audience'), 'ei.group', t('Select the target audience of your novel'))
         self.audienceSelector = DescriptorLabelSelector()
-        self.audienceSelector.setLabels(['Children', 'Middle Grade', 'Young Adult', 'New Adult', 'Adult'],
+        self.audienceSelector.setLabels([t('Children'), t('Middle Grade'), t('Young Adult'), t('New Adult'), t('Adult')],
                                         [self.novel.descriptors.audience])
         self.audienceSelector.selectionChanged.connect(self._audienceSelected)
         self.center.layout().addWidget(self.audienceSelector)
 
-        self._addHeader('Mood', 'mdi.emoticon-outline', "Select your novel's expected mood and atmosphere",
-                        ref='Source: The StoryGraph', refLink='https://www.thestorygraph.com/')
+        self._addHeader(t('Mood'), 'mdi.emoticon-outline', t("Select your novel's expected mood and atmosphere"),
+                        ref=t('Source: The StoryGraph'), refLink='https://www.thestorygraph.com/')
         self.moodSelector = DescriptorLabelSelector(exclusive=False)
         self.moodSelector.setLabels(
             ['adventurous', 'challenging', 'dark', 'emotional', 'epic',
@@ -741,11 +747,11 @@ class NovelDescriptorsEditorPopup(PopupDialog):
         self.moodSelector.selectionChanged.connect(self._moodSelected)
         self.center.layout().addWidget(self.moodSelector)
 
-        self._addHeader('Style', 'fa5s.pen-fancy', "Select your novel's writing style",
-                        ref='Source: Wonderbook',
+        self._addHeader(t('Style'), 'fa5s.pen-fancy', t("Select your novel's writing style"),
+                        ref=t('Source: Wonderbook'),
                         refLink='https://www.amazon.com/Wonderbook-Illustrated-Creating-Imaginative-Fiction/dp/1419704427')
         self.styleSelector = DescriptorLabelSelector()
-        self.styleSelector.setLabels(['Stark', 'Conventional', 'Conspicuous', 'Lush'],
+        self.styleSelector.setLabels([t('Stark'), t('Conventional'), t('Conspicuous'), t('Lush')],
                                      [self.novel.descriptors.style])
         self.styleSelector.selectionChanged.connect(self._styleSelected)
         self.center.layout().addWidget(self.styleSelector)
@@ -754,8 +760,8 @@ class NovelDescriptorsEditorPopup(PopupDialog):
         self.wdgSpice.spiceHoverEntered.connect(self._updateSpiceDescription)
         self.wdgSpice.spiceHoverLeft.connect(self._resetSpiceDescription)
         margins(self.wdgSpice, left=10)
-        toggle = self._addHeader('Spice', 'mdi6.chili-mild', "", checkable=True, wdg=self.wdgSpice,
-                                 ref='Source: romancerehab.com',
+        toggle = self._addHeader(t('Spice'), 'mdi6.chili-mild', "", checkable=True, wdg=self.wdgSpice,
+                                 ref=t('Source: romancerehab.com'),
                                  refLink='https://www.romancerehab.com/chili-pepper-heat-rating-scale.html')
         self.descSpice = label('', description=True)
         self.center.layout().addWidget(self.descSpice)
@@ -826,9 +832,9 @@ class NovelDescriptorsEditorPopup(PopupDialog):
 
     def _typeSelected(self):
         if self.toggleStandalone.isChecked():
-            self.novel.descriptors.type = 'Standalone'
+            self.novel.descriptors.type = t('Standalone')
         elif self.toggleSeries.isChecked():
-            self.novel.descriptors.type = 'Series'
+            self.novel.descriptors.type = t('Series')
         else:
             self.novel.descriptors.type = ''
 
@@ -896,18 +902,19 @@ class NovelDescriptorsDisplay(QWidget):
         margins(self.wdgMood, top=5)
         self.wdgStyle = self._labels()
 
-        self._grid.addWidget(self._label('Genres', 'mdi.drama-masks'), 0, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self._grid.addWidget(self._label(t('Genres'), 'mdi.drama-masks'), 0, 0, alignment=Qt.AlignmentFlag.AlignRight)
         self._grid.addWidget(self.wdgGenres, 0, 1)
-        self._grid.addWidget(self._label('Audience', 'ei.group'), 1, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self._grid.addWidget(self._label(t('Audience'), 'ei.group'), 1, 0, alignment=Qt.AlignmentFlag.AlignRight)
         self._grid.addWidget(self.wdgAudience, 1, 1)
-        self._grid.addWidget(self._label('Mood', 'mdi.emoticon-outline'), 2, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self._grid.addWidget(self._label(t('Mood'), 'mdi.emoticon-outline'), 2, 0,
+                               alignment=Qt.AlignmentFlag.AlignRight)
         self._grid.addWidget(self.wdgMood, 2, 1)
-        self._grid.addWidget(self._label('Style', 'fa5s.pen-fancy'), 3, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self._grid.addWidget(self._label(t('Style'), 'fa5s.pen-fancy'), 3, 0, alignment=Qt.AlignmentFlag.AlignRight)
         self._grid.addWidget(self.wdgStyle, 3, 1)
 
         self.wdgRightSide = QWidget()
         vbox(self.wdgRightSide, spacing=8)
-        self._lblStandalone = self._label('Standalone', 'ei.book', major=False)
+        self._lblStandalone = self._label(t('Standalone'), 'ei.book', major=False)
         self._words = self._label('', 'mdi.book-open-page-variant-outline', major=False)
         self.wdgRightSide.layout().addWidget(self._lblStandalone, alignment=Qt.AlignmentFlag.AlignLeft)
         self.wdgRightSide.layout().addWidget(self._words, alignment=Qt.AlignmentFlag.AlignLeft)
@@ -915,7 +922,7 @@ class NovelDescriptorsDisplay(QWidget):
         self._updateWc()
         self._grid.addWidget(self.wdgRightSide, 0, 2, 1, 2, alignment=Qt.AlignmentFlag.AlignTop)
 
-        self.lblSpice = self._label('Spice', 'mdi6.chili-mild')
+        self.lblSpice = self._label(t('Spice'), 'mdi6.chili-mild')
         self.wdgSpice = SpiceWidget()
         self.wdgSpice.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         self._grid.addWidget(self.lblSpice, 4, 0, alignment=Qt.AlignmentFlag.AlignRight)
@@ -977,7 +984,7 @@ class NovelDescriptorsDisplay(QWidget):
         if self.novel.descriptors.type:
             self._lblStandalone.setText(self.novel.descriptors.type)
             self._lblStandalone.setVisible(True)
-            if self.novel.descriptors.type == 'Standalone':
+            if self.novel.descriptors.type == t('Standalone'):
                 self._lblStandalone.setIcon(IconRegistry.from_name('ei.book', 'grey'))
             else:
                 self._lblStandalone.setIcon(IconRegistry.from_name('ph.books', 'grey'))
@@ -1074,7 +1081,7 @@ class NovelDescriptorsDisplay(QWidget):
                 continue
             wc += scene.manuscript.statistics.wc
 
-        self._words.setText(f'Word count: {wc:,}')
+        self._words.setText(f'{t("Word count:")} {wc:,}')
 
     def _premise_changed(self):
         text = self.textPremise.toPlainText()

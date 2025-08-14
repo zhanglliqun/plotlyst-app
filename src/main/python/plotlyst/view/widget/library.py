@@ -32,6 +32,7 @@ from plotlyst.common import PLOTLYST_MAIN_COLOR, MAXIMUM_SIZE, RELAXED_WHITE_COL
 from plotlyst.core.domain import NovelDescriptor, Novel, StoryType
 from plotlyst.core.scrivener import ScrivenerParser
 from plotlyst.env import app_env
+from plotlyst.i18n import t
 from plotlyst.resources import ResourceType, resource_registry
 from plotlyst.service.cache import entities_registry
 from plotlyst.service.manuscript import import_docx
@@ -107,7 +108,7 @@ class ShelvesTreeView(TreeView):
         self._novels: Dict[NovelDescriptor, NovelNode] = {}
         self._series: Dict[str, NovelNode] = {}
 
-        self._wdgNovels = ShelveNode('Novels', IconRegistry.from_name('mdi.bookshelf'), settings=self._settings,
+        self._wdgNovels = ShelveNode(t('Novels'), IconRegistry.from_name('mdi.bookshelf'), settings=self._settings,
                                      readOnly=self._readOnly)
         self._wdgNovels.selectionChanged.connect(self._novelsShelveSelectionChanged)
         self._wdgNovels.newNovelRequested.connect(self.newNovelRequested)
@@ -218,7 +219,7 @@ class NovelSelectorPopup(ItemBasedTreeSelectorPopup):
 
     @overrides
     def _title(self) -> str:
-        return 'Select a novel'
+        return t('Select a novel')
 
     @overrides
     def _selected(self, item: NovelDescriptor):
@@ -253,7 +254,7 @@ class NovelDisplayCard(QWidget):
         apply_border_image(self.wdgTitle, resource_registry.frame1)
 
         self.lineNovelTitle = AutoAdjustableLineEdit(defaultWidth=70)
-        self.lineNovelTitle.setPlaceholderText('Title')
+        self.lineNovelTitle.setPlaceholderText(t('Title'))
         transparent(self.lineNovelTitle)
         incr_font(self.lineNovelTitle, 10)
 
@@ -268,7 +269,7 @@ class NovelDisplayCard(QWidget):
         self.btnNovelSettings.setHidden(True)
 
         self.lineSubtitle = AutoAdjustableLineEdit()
-        self.lineSubtitle.setPlaceholderText('Subtitle')
+        self.lineSubtitle.setPlaceholderText(t('Subtitle'))
         transparent(self.lineSubtitle)
         italic(self.lineSubtitle)
         self.iconSubtitle = Icon()
@@ -279,7 +280,7 @@ class NovelDisplayCard(QWidget):
 
         self.iconImportOrigin = Icon()
         self.iconImportOrigin.setIcon(IconRegistry.from_name('mdi.alpha-s-circle-outline', color='#410253'))
-        self.iconImportOrigin.setToolTip('Synced from Scrivener')
+        self.iconImportOrigin.setToolTip(t('Synced from Scrivener'))
         self.iconImportOrigin.installEventFilter(InstantTooltipEventFilter(self.iconImportOrigin))
         translucent(self.iconImportOrigin, 0.7)
         incr_icon(self.iconImportOrigin, 8)
@@ -297,12 +298,12 @@ class NovelDisplayCard(QWidget):
         # self.textSynopsis.setMinimumSize(500, 100)
         self.textSynopsis.setMaximumSize(750, 150)
         incr_font(self.textSynopsis, 5)
-        self.textSynopsis.setPlaceholderText('Short synopsis')
+        self.textSynopsis.setPlaceholderText(t('Short synopsis'))
         transparent(self.textSynopsis)
         self.wdgSynopsis.layout().addWidget(wrap(self.iconSynopsis, margin_top=4), alignment=Qt.AlignmentFlag.AlignTop)
         self.wdgSynopsis.layout().addWidget(self.textSynopsis)
 
-        self.btnActivate = push_btn(IconRegistry.book_icon(color='white', color_on='white'), 'Open story',
+        self.btnActivate = push_btn(IconRegistry.book_icon(color='white', color_on='white'), t('Open story'),
                                     properties=['confirm', 'positive', 'large'])
         self.btnActivate.setIconSize(QSize(28, 28))
 
@@ -377,7 +378,7 @@ class SeriesDisplayCard(QWidget):
         self.wdgTitle.setMaximumWidth(1000)
 
         self.lineNovelTitle = AutoAdjustableLineEdit(defaultWidth=70)
-        self.lineNovelTitle.setPlaceholderText('Title')
+        self.lineNovelTitle.setPlaceholderText(t('Title'))
         transparent(self.lineNovelTitle)
         incr_font(self.lineNovelTitle, 16)
 
@@ -438,7 +439,7 @@ class SeriesDisplayCard(QWidget):
 
     def _addPlaceholder(self):
         placeholderCard = PlaceholderCard()
-        placeholderCard.btnPlus.setText('Attach a novel')
+        placeholderCard.btnPlus.setText(t('Attach a novel'))
         placeholderCard.selected.connect(self.attachNovel)
         self.cards.addCard(placeholderCard)
 
@@ -470,15 +471,16 @@ class StoryCreationDialog(PopupDialog):
         hbox(self.wdgBanner, 0, 0).addWidget(self.lblBanner, alignment=Qt.AlignmentFlag.AlignCenter)
         self.lblBanner.setPixmap(QPixmap(resource_registry.banner))
 
-        self.btnFinish = push_btn(icon=IconRegistry.book_icon(RELAXED_WHITE_COLOR), text='Finish',
+        self.btnFinish = push_btn(icon=IconRegistry.book_icon(RELAXED_WHITE_COLOR), text=t('Finish'),
                                   properties=['confirm', 'positive'])
         sp(self.btnFinish).h_exp()
         self.btnFinish.clicked.connect(self.accept)
         self.btnFinish.setVisible(False)
-        self.btnNext = push_btn(icon=IconRegistry.book_icon(RELAXED_WHITE_COLOR), text='Create',
+        self.btnNext = push_btn(icon=IconRegistry.book_icon(RELAXED_WHITE_COLOR), text=t('Create'),
                                 properties=['confirm', 'positive'])
         self.btnNext.clicked.connect(self._nextClicked)
-        self.btnCancel = push_btn(icon=IconRegistry.close_icon('grey'), text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(icon=IconRegistry.close_icon('grey'), text=t('Cancel'),
+                                  properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
         self.wdgCenter = QWidget()
@@ -489,15 +491,15 @@ class StoryCreationDialog(PopupDialog):
         self.wdgTypesContainer.setProperty('bg', True)
         vbox(self.wdgTypesContainer)
         margins(self.wdgTypesContainer, left=10)
-        self.btnNewStory = push_btn(IconRegistry.book_icon(color_on=RELAXED_WHITE_COLOR), 'Create a new story',
+        self.btnNewStory = push_btn(IconRegistry.book_icon(color_on=RELAXED_WHITE_COLOR), t('Create a new story'),
                                     checkable=True, properties=['main-side-nav'])
         self.btnNewStory.setChecked(True)
-        self.btnNewSeries = push_btn(IconRegistry.series_icon(color_on=RELAXED_WHITE_COLOR), 'Create a series',
+        self.btnNewSeries = push_btn(IconRegistry.series_icon(color_on=RELAXED_WHITE_COLOR), t('Create a series'),
                                      checkable=True, properties=['main-side-nav'])
         self.btnScrivener = push_btn(IconRegistry.from_name('mdi.alpha-s-circle-outline', color_on=RELAXED_WHITE_COLOR),
-                                     'Import from Scrivener', checkable=True, properties=['main-side-nav'])
+                                     t('Import from Scrivener'), checkable=True, properties=['main-side-nav'])
         self.btnDocx = push_btn(IconRegistry.from_name('fa5.file-word', color_on=RELAXED_WHITE_COLOR),
-                                'Import from docx', checkable=True, properties=['main-side-nav'])
+                                t('Import from docx'), checkable=True, properties=['main-side-nav'])
 
         self.buttonGroup = QButtonGroup()
         self.buttonGroup.addButton(self.btnNewStory)
@@ -549,32 +551,34 @@ class StoryCreationDialog(PopupDialog):
         self.stackedWidget.setCurrentWidget(self.pageNewStory)
 
         self.lineTitle = QLineEdit()
-        self.lineTitle.setPlaceholderText("Title (Default: 'My new novel')")
+        self.lineTitle.setPlaceholderText(t("Title (Default: 'My new novel')"))
         self.lineTitle.setProperty('rounded', True)
         self.lineTitle.setProperty('white-bg', True)
         incr_font(self.lineTitle, 2)
         self.toggleWizard = Toggle()
         self.toggleWizard.toggled.connect(self._wizardToggled)
         self.toggleWizard.setChecked(True)
-        self.wdgWizardSubtitle = Subtitle(title="Personalization wizard",
-                                          description="Launch a wizard to customize your writing or outlining experience (recommended)",
+        self.wdgWizardSubtitle = Subtitle(title=t("Personalization wizard"),
+                                          description=t(
+                                              "Launch a wizard to customize your writing or outlining experience (recommended)"),
                                           icon='ph.magic-wand')
         self.wdgWizardSubtitle.addWidget(self.toggleWizard)
 
-        self.pageNewStory.layout().addWidget(Subtitle(title="What's your story's title?", icon='fa5s.book-open'))
+        self.pageNewStory.layout().addWidget(Subtitle(title=t("What's your story's title?"), icon='fa5s.book-open'))
         self.pageNewStory.layout().addWidget(self.lineTitle)
         self.pageNewStory.layout().addWidget(self.wdgWizardSubtitle)
         self.pageNewStory.layout().addWidget(vspacer())
 
         self.lineSeriesTitle = QLineEdit()
-        self.lineSeriesTitle.setPlaceholderText("Series Title (Default: 'My new series')")
+        self.lineSeriesTitle.setPlaceholderText(t("Series Title (Default: 'My new series')"))
         self.lineSeriesTitle.setProperty('rounded', True)
         self.lineSeriesTitle.setProperty('white-bg', True)
         incr_font(self.lineSeriesTitle, 2)
-        self.pageNewSeries.layout().addWidget(Subtitle(title="What's the title of your new series?", icon='ph.books'))
+        self.pageNewSeries.layout().addWidget(
+            Subtitle(title=t("What's the title of your new series?"), icon='ph.books'))
         self.pageNewSeries.layout().addWidget(self.lineSeriesTitle)
         self.pageNewSeries.layout().addWidget(
-            label("You can link novels to this series later and easily share characters or locations across them",
+            label(t("You can link novels to this series later and easily share characters or locations across them"),
                   description=True, wordWrap=True, decr_font_diff=1))
         self.pageNewSeries.layout().addWidget(vspacer())
 
@@ -583,16 +587,18 @@ class StoryCreationDialog(PopupDialog):
         self.wdgImportDetails.setHidden(True)
 
         self.btnLoadScrivener = push_btn(IconRegistry.from_name('mdi6.application-import', color=RELAXED_WHITE_COLOR),
-                                         text='Select a Scrivener project', properties=['positive', 'confirm'])
+                                         text=t('Select a Scrivener project'),
+                                         properties=['positive', 'confirm'])
         self.btnLoadScrivener.clicked.connect(self._loadFromScrivener)
-        self.pageScrivener.layout().addWidget(Subtitle(title='Import project from Scrivener',
-                                                       description="Select your Scrivener project to import your binder's content into Plotlyst.",
+        self.pageScrivener.layout().addWidget(Subtitle(title=t('Import project from Scrivener'),
+                                                       description=t(
+                                                           "Select your Scrivener project to import your binder's content into Plotlyst."),
                                                        icon='mdi6.application-import'))
         self.pageScrivener.layout().addWidget(self.btnLoadScrivener, alignment=Qt.AlignmentFlag.AlignRight)
         self.pageScrivener.layout().addWidget(vspacer())
 
         self.btnLoadDocx = push_btn(IconRegistry.from_name('mdi6.application-import', color=RELAXED_WHITE_COLOR),
-                                    text='Select a docx file', properties=['positive', 'confirm'])
+                                    text=t('Select a docx file'), properties=['positive', 'confirm'])
         self.btnLoadDocx.clicked.connect(self._loadFromDocx)
 
         self.chapterH1 = tool_btn(IconRegistry.from_name('mdi.format-header-1', color_on=PLOTLYST_MAIN_COLOR),
@@ -611,13 +617,14 @@ class StoryCreationDialog(PopupDialog):
 
         self.btnInheritSceneTitle = Toggle()
 
-        self.pageDocx.layout().addWidget(Subtitle(title="Import manuscript from docx",
-                                                  description='Chapter titles are expected to be under the following heading',
+        self.pageDocx.layout().addWidget(Subtitle(title=t("Import manuscript from docx"),
+                                                  description=t(
+                                                      'Chapter titles are expected to be under the following heading'),
                                                   icon='fa5.file-word'))
         self.pageDocx.layout().addWidget(group(self.chapterH1, self.chapterH2, self.chapterH3, margin=0),
                                          alignment=Qt.AlignmentFlag.AlignCenter)
         self.pageDocx.layout().addWidget(
-            group(label('Scene titles will inherit chapter titles', description=True), self.btnInheritSceneTitle,
+            group(label(t('Scene titles will inherit chapter titles'), description=True), self.btnInheritSceneTitle,
                   spacer(), margin_left=23))
         self.pageDocx.layout().addWidget(self.btnLoadDocx, alignment=Qt.AlignmentFlag.AlignRight)
         self.pageDocx.layout().addWidget(vspacer())
@@ -670,7 +677,7 @@ class StoryCreationDialog(PopupDialog):
             self.btnFinish.setVisible(False)
 
     def _wizardToggled(self, toggled: bool):
-        self.btnNext.setText('Start wizard' if toggled else 'Create')
+        self.btnNext.setText(t('Start wizard') if toggled else t('Create'))
         if toggled:
             icon = IconRegistry.from_name('ph.magic-wand', 'white', 'white')
         else:
@@ -694,7 +701,7 @@ class StoryCreationDialog(PopupDialog):
             self.wdgBanner.setHidden(True)
             self.wdgTypesContainer.setHidden(True)
             self.btnNext.setVisible(True)
-            self.btnNext.setText('Next')
+            self.btnNext.setText(t('Next'))
             self.btnNext.setIcon(IconRegistry.from_name('fa5s.chevron-circle-right', RELAXED_WHITE_COLOR))
             self.btnFinish.setVisible(False)
             self.stackedWidget.setCurrentWidget(self.pageWizard)
@@ -712,11 +719,12 @@ class StoryCreationDialog(PopupDialog):
         else:
             default_path = None
         if app_env.is_mac():
-            project = QFileDialog.getOpenFileName(self, 'Choose a Scrivener project directory', default_path)
+            project = QFileDialog.getOpenFileName(self, t('Choose a Scrivener project directory'), default_path)
             if project:
                 project = project[0]
         else:
-            project = QFileDialog.getExistingDirectory(self, 'Choose a Scrivener project directory', default_path)
+            project = QFileDialog.getExistingDirectory(self, t('Choose a Scrivener project directory'),
+                                                       default_path)
         if not project:
             return
 
@@ -729,7 +737,7 @@ class StoryCreationDialog(PopupDialog):
         if not ask_for_resource(ResourceType.PANDOC):
             return
 
-        docxpath = QFileDialog.getOpenFileName(self, 'Open a docx file')
+        docxpath = QFileDialog.getOpenFileName(self, t('Open a docx file'))
         if not docxpath or not docxpath[0]:
             return
 
@@ -753,11 +761,11 @@ class StoryCreationDialog(PopupDialog):
         self.wdgImportDetails.setVisible(True)
         self.wdgImportDetails.setNovel(self._importedNovel)
 
-        self.btnNext.setText('Next')
+        self.btnNext.setText(t('Next'))
         self.btnNext.setIcon(IconRegistry.from_name('fa5s.chevron-circle-right', RELAXED_WHITE_COLOR))
 
     def __newNovel(self) -> Novel:
-        return Novel.new_novel(self.lineTitle.text() if self.lineTitle.text() else 'My new novel')
+        return Novel.new_novel(self.lineTitle.text() if self.lineTitle.text() else t('My new novel'))
 
     def __newSeries(self) -> Novel:
-        return Novel.new_series(self.lineSeriesTitle.text() if self.lineSeriesTitle.text() else 'My new series')
+        return Novel.new_series(self.lineSeriesTitle.text() if self.lineSeriesTitle.text() else t('My new series'))

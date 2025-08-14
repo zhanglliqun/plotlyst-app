@@ -40,6 +40,7 @@ from plotlyst.service.cache import entities_registry
 from plotlyst.service.persistence import flush_or_fail
 from plotlyst.service.tour import TourService
 from plotlyst.view._view import AbstractView
+from plotlyst.i18n import t
 from plotlyst.view.common import link_buttons_to_pages, ButtonPressResizeEventFilter, action, \
     TooltipPositionEventFilter, open_url, push_btn, wrap
 from plotlyst.view.generated.home_view_ui import Ui_HomeView
@@ -169,9 +170,9 @@ class HomeView(AbstractView):
         self.ui.btnAddNewStoryMain.installEventFilter(ButtonPressResizeEventFilter(self.ui.btnAddNewStoryMain))
 
         menu = MenuWidget(self.novelDisplayCard.btnNovelSettings)
-        menu.addAction(action('Delete', IconRegistry.trash_can_icon(), lambda: self._on_delete()))
+        menu.addAction(action(t('Delete'), IconRegistry.trash_can_icon(), lambda: self._on_delete()))
 
-        self._btnAddNew = push_btn(IconRegistry.plus_icon(RELAXED_WHITE_COLOR), tooltip='Add a new story',
+        self._btnAddNew = push_btn(IconRegistry.plus_icon(RELAXED_WHITE_COLOR), tooltip=t('Add a new story'),
                                    properties=['base', 'positive'])
         self._btnAddNew.clicked.connect(self._add_new_novel)
         self._shelvesTreeView = ShelvesTreeView(settings=TreeSettings(font_incr=2))
@@ -372,11 +373,11 @@ class HomeView(AbstractView):
         if novel is None:
             novel = self._selected_novel
         if novel.story_type == StoryType.Series:
-            title = f'Are you sure you want to delete the series "{novel.title}"?'
-            msg = "<html>The attached novels <b>won't</b> be deleted."
+            title = t('Are you sure you want to delete the series "{}"?').format(novel.title)
+            msg = t("<html>The attached novels <b>won't</b> be deleted.")
         else:
-            title = f'Are you sure you want to delete the novel "{novel.title}"?'
-            msg = '<html><ul><li>This action cannot be undone.</li><li>All characters and scenes will be lost.</li>'
+            title = t('Are you sure you want to delete the novel "{}"?').format(novel.title)
+            msg = f'<html><ul><li>{t("This action cannot be undone.")}</li><li>{t("All characters and scenes will be lost.")}</li>'
 
         if confirmed(msg, title):
             if novel.story_type == StoryType.Series:

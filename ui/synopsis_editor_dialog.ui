@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Synopsis editor</string>
+   <string tr="true">Synopsis editor</string>
   </property>
   <property name="relaxed-white-bg" stdset="0">
    <bool>true</bool>
@@ -35,7 +35,7 @@
    <item>
     <widget class="DocumentTextEditor" name="textSynopsis" native="true">
      <property name="placeholderText" stdset="0">
-      <string>Write down your novel's main events</string>
+      <string tr="true">Write down your novel's main events</string>
      </property>
     </widget>
    </item>
@@ -45,7 +45,7 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="text">
-      <string>Close</string>
+      <string tr="true">Close</string>
      </property>
      <property name="confirm" stdset="0">
       <bool>true</bool>

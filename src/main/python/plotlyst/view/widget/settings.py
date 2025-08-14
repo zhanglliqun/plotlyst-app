@@ -34,6 +34,7 @@ from plotlyst.common import PLOTLYST_SECONDARY_COLOR, PLOTLYST_TERTIARY_COLOR, D
 from plotlyst.core.domain import Novel, NovelSetting
 from plotlyst.env import app_env
 from plotlyst.event.core import emit_event, EventListener, Event
+from plotlyst.i18n import t
 from plotlyst.event.handler import event_dispatchers
 from plotlyst.events import NovelPanelCustomizationEvent, \
     NovelStructureToggleEvent, NovelStorylinesToggleEvent, NovelCharactersToggleEvent, NovelScenesToggleEvent, \
@@ -52,43 +53,48 @@ from plotlyst.view.widget.display import Icon
 from plotlyst.view.widget.input import Toggle
 
 setting_titles: Dict[NovelSetting, str] = {
-    NovelSetting.Structure: 'Story structure',
-    NovelSetting.Mindmap: 'Mindmap',
-    NovelSetting.Storylines: 'Storylines',
-    NovelSetting.Characters: 'Characters',
-    NovelSetting.Scenes: 'Narrative manager',
-    NovelSetting.Scenes_organization: 'Work with scenes',
-    NovelSetting.Track_emotion: 'Track character emotions',
-    NovelSetting.Track_motivation: 'Track character motivation',
-    NovelSetting.Track_conflict: 'Track character conflicts',
-    NovelSetting.World_building: 'World-building',
-    NovelSetting.Manuscript: 'Manuscript',
-    NovelSetting.Documents: 'Documents',
-    NovelSetting.Management: 'Task management',
-    NovelSetting.Track_pov: 'Point of view',
-    NovelSetting.Character_enneagram: 'Enneagram',
-    NovelSetting.Character_mbti: 'MBTI',
-    NovelSetting.Character_love_style: 'Love style',
-    NovelSetting.Character_work_style: 'Work style',
+    NovelSetting.Structure: t('Story structure'),
+    NovelSetting.Mindmap: t('Mindmap'),
+    NovelSetting.Storylines: t('Storylines'),
+    NovelSetting.Characters: t('Characters'),
+    NovelSetting.Scenes: t('Narrative manager'),
+    NovelSetting.Scenes_organization: t('Work with scenes'),
+    NovelSetting.Track_emotion: t('Track character emotions'),
+    NovelSetting.Track_motivation: t('Track character motivation'),
+    NovelSetting.Track_conflict: t('Track character conflicts'),
+    NovelSetting.World_building: t('World-building'),
+    NovelSetting.Manuscript: t('Manuscript'),
+    NovelSetting.Documents: t('Documents'),
+    NovelSetting.Management: t('Task management'),
+    NovelSetting.Track_pov: t('Point of view'),
+    NovelSetting.Character_enneagram: t('Enneagram'),
+    NovelSetting.Character_mbti: t('MBTI'),
+    NovelSetting.Character_love_style: t('Love style'),
+    NovelSetting.Character_work_style: t('Work style'),
 }
 setting_descriptions: Dict[NovelSetting, str] = {
-    NovelSetting.Structure: "Follow a story structure to help you with your story's pacing and escalation",
-    NovelSetting.Storylines: "Create separate storylines for plot, character's change, subplots, or relationship plots",
-    NovelSetting.Characters: "Create a cast of characters with different roles, personalities, backstories, goals, and relationships among them",
-    NovelSetting.Scenes: "Manage scenes and chapters in different perspectives, and link characters, structure beats, or storylines to them",
-    NovelSetting.Scenes_organization: "Organize your novel into scenes and chapters. Otherwise if turned off, you will write and manage chapters only.",
-    NovelSetting.Track_emotion: "Track and visualize how characters' emotions shift between positive and negative throughout the scenes",
-    NovelSetting.Track_motivation: "Track and visualize how characters' motivation change throughout the scenes",
-    NovelSetting.Track_conflict: 'Track the frequency and the type of conflicts the characters face',
-    NovelSetting.World_building: "Develop your story's world by creating fictional settings and lore",
-    NovelSetting.Manuscript: "Write your story in Plotlyst using the manuscript panel",
-    NovelSetting.Documents: "Create documents and mind maps for your planning or research",
-    NovelSetting.Management: "Stay organized by tracking your tasks in a simple Kanban board",
-    NovelSetting.Track_pov: "Track the point of view characters of your story",
-    NovelSetting.Character_enneagram: 'Consider enneagram personality type for characters',
-    NovelSetting.Character_mbti: 'Consider MBTI personality type for characters',
-    NovelSetting.Character_love_style: "Consider the characters' preferred love style",
-    NovelSetting.Character_work_style: "Consider the characters' most typical working style",
+    NovelSetting.Structure: t("Follow a story structure to help you with your story's pacing and escalation"),
+    NovelSetting.Storylines: t(
+        "Create separate storylines for plot, character's change, subplots, or relationship plots"),
+    NovelSetting.Characters: t(
+        "Create a cast of characters with different roles, personalities, backstories, goals, and relationships among them"),
+    NovelSetting.Scenes: t(
+        "Manage scenes and chapters in different perspectives, and link characters, structure beats, or storylines to them"),
+    NovelSetting.Scenes_organization: t(
+        "Organize your novel into scenes and chapters. Otherwise if turned off, you will write and manage chapters only."),
+    NovelSetting.Track_emotion: t(
+        "Track and visualize how characters' emotions shift between positive and negative throughout the scenes"),
+    NovelSetting.Track_motivation: t("Track and visualize how characters' motivation change throughout the scenes"),
+    NovelSetting.Track_conflict: t('Track the frequency and the type of conflicts the characters face'),
+    NovelSetting.World_building: t("Develop your story's world by creating fictional settings and lore"),
+    NovelSetting.Manuscript: t("Write your story in Plotlyst using the manuscript panel"),
+    NovelSetting.Documents: t("Create documents and mind maps for your planning or research"),
+    NovelSetting.Management: t("Stay organized by tracking your tasks in a simple Kanban board"),
+    NovelSetting.Track_pov: t("Track the point of view characters of your story"),
+    NovelSetting.Character_enneagram: t('Consider enneagram personality type for characters'),
+    NovelSetting.Character_mbti: t('Consider MBTI personality type for characters'),
+    NovelSetting.Character_love_style: t("Consider the characters' preferred love style"),
+    NovelSetting.Character_work_style: t("Consider the characters' most typical working style"),
 }
 
 panel_events = [NovelCharactersToggleEvent,
@@ -356,7 +362,7 @@ class NovelPanelSettingsWidget(QWidget):
         self._lblDesc.setAlignment(Qt.AlignmentFlag.AlignCenter)
         hbox(self._wdgBottom, margin=15).addWidget(self._lblDesc, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        self.layout().addWidget(label('Customize your experience:'),
+        self.layout().addWidget(label(t('Customize your experience:')),
                                 alignment=Qt.AlignmentFlag.AlignCenter)
         self.layout().addWidget(self._wdgCenter)
         self.layout().addWidget(self._wdgBottom)
@@ -426,15 +432,16 @@ class NovelPanelSettingsWidget(QWidget):
 
     def _disabledToggleClicked(self, link: str):
         menu = MenuWidget()
-        menu.addSection('This is a premium feature. Please purchase Plotlyst to gain access to this panel.')
+        menu.addSection(t('This is a premium feature. Please purchase Plotlyst to gain access to this panel.'))
         menu.addAction(
-            action('Click here to read more about this feature', icon=IconRegistry.from_name('fa5s.external-link-alt'),
+            action(t('Click here to read more about this feature'),
+                   icon=IconRegistry.from_name('fa5s.external-link-alt'),
                    slot=lambda: open_url(link)
                    )
         )
         menu.addSeparator()
         menu.addAction(
-            action('Purchase', icon=IconRegistry.from_name('ei.shopping-cart'),
+            action(t('Purchase'), icon=IconRegistry.from_name('ei.shopping-cart'),
                    slot=lambda: open_url(DEFAULT_PREMIUM_LINK)
                    )
         )
@@ -510,9 +517,9 @@ class NovelSettingsWidget(QWidget, EventListener):
         if free:
             self._addAdvancedSettings()
 
-            self.layout().addWidget(label('Premium panels', h4=True), alignment=Qt.AlignmentFlag.AlignLeft)
+            self.layout().addWidget(label(t('Premium panels'), h4=True), alignment=Qt.AlignmentFlag.AlignLeft)
             btnPurchase = push_btn(IconRegistry.from_name('ei.shopping-cart', RELAXED_WHITE_COLOR),
-                                   'Upgrade to gain access to these additional panels',
+                                   t('Upgrade to gain access to these additional panels'),
                                    properties=['confirm', 'positive'])
             btnPurchase.clicked.connect(lambda: open_url(DEFAULT_PREMIUM_LINK))
             btnPurchase.installEventFilter(OpacityEventFilter(btnPurchase, 0.8, 0.6))
@@ -562,7 +569,7 @@ class NovelSettingsWidget(QWidget, EventListener):
         return toggle
 
     def _addAdvancedSettings(self):
-        self.layout().addWidget(label('Advanced settings', h5=True), alignment=Qt.AlignmentFlag.AlignLeft)
+        self.layout().addWidget(label(t('Advanced settings'), h5=True), alignment=Qt.AlignmentFlag.AlignLeft)
         wdgScenesOrg = self._addSettingToggle(NovelSetting.Scenes_organization, insertLine=False,
                                               enabled=not self._novel.is_readonly())
         margins(wdgScenesOrg, bottom=20)
@@ -573,8 +580,9 @@ class NovelSettingsWidget(QWidget, EventListener):
     def _scenesOrganizationToggled(self, toggle: NovelSettingToggle, setting: NovelSetting, toggled: bool):
         if not toggled and self._novel.chapters:
             if asked(
-                    "Are you sure you want to write and manage chapters directly? Your scenes will be transformed into chapters, and your current chapters will be removed.",
-                    "Turn off scenes"):
+                    t(
+                        "Are you sure you want to write and manage chapters directly? Your scenes will be transformed into chapters, and your current chapters will be removed."),
+                    t("Turn off scenes")):
                 reset_scenes_organization(self._novel)
                 emit_event(self._novel, ScenesOrganizationResetEvent(self))
             else:

@@ -508,21 +508,21 @@ class ConnectorToolbar(PaintedItemBasedToolbar):
         self._toolbar.layout().addWidget(self._sbWidth)
 
     @overrides
-    def setItem(self, connector: ConnectorItem):
-        super().setItem(connector)
+    def setItem(self, item):
+        super().setItem(item)
         self._item = None
 
-        self._sbWidth.setValue(connector.size())
-        self._textLineEdit.setText(connector.text())
-        self._arrowStart.setChecked(connector.startArrowEnabled())
-        self._arrowEnd.setChecked(connector.endArrowEnabled())
+        self._sbWidth.setValue(item.size())
+        self._textLineEdit.setText(item.text())
+        self._arrowStart.setChecked(item.startArrowEnabled())
+        self._arrowEnd.setChecked(item.endArrowEnabled())
 
-        penStyle = connector.penStyle()
+        penStyle = item.penStyle()
         for line in [self._solidLine, self._dashLine, self._dotLine]:
             if penStyle == line.penStyle():
                 line.setChecked(True)
                 break
-        self._item = connector
+        self._item = item
 
     def _textEdited(self):
         if self._item:
@@ -574,7 +574,7 @@ class NoteToolbar(PaintedItemBasedToolbar):
         self._toolbar.layout().addWidget(self._btnTransparent)
 
     @overrides
-    def setItem(self, item: NoteItem):
+    def setItem(self, item):
         super().setItem(item)
         self._item = None
 
@@ -602,7 +602,7 @@ class IconItemToolbar(PaintedItemBasedToolbar):
         self._toolbar.layout().addWidget(self._sbSize)
 
     @overrides
-    def setItem(self, item: IconItem):
+    def setItem(self, item):
         super().setItem(item)
         self._item = None
 
@@ -650,7 +650,7 @@ class EventItemToolbar(PaintedItemBasedToolbar):
         self._toolbar.layout().addWidget(self._btnTransparent)
 
     @overrides
-    def setItem(self, item: EventItem):
+    def setItem(self, item):
         super().setItem(item)
         self._item = None
 

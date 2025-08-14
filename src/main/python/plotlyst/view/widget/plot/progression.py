@@ -125,7 +125,7 @@ class DynamicPlotMultiPrincipleElements(OutlineTimelineWidget):
 
 
     @overrides
-    def _newBeatWidget(self, item: DynamicPlotPrinciple) -> OutlineItemWidget:
+    def _newBeatWidget(self, item) -> OutlineItemWidget:
         wdg = DynamicPlotPrincipleElementWidget(self.novel, item)
         wdg.removed.connect(self._beatRemoved)
         return wdg

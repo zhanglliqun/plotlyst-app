@@ -40,6 +40,7 @@ from plotlyst.core.domain import SelectionItem, Novel, tag_characterization, tag
     tag_brainstorming, tag_research, tag_writing, tag_plotting, tag_theme, tag_outlining, tag_revision, tag_drafting, \
     tag_editing, tag_collect_feedback, tag_publishing, tag_marketing, tag_book_cover_design, tag_formatting, \
     SnapshotType
+from plotlyst.i18n import t
 from plotlyst.env import app_env
 from plotlyst.event.core import emit_event, emit_global_event
 from plotlyst.events import SocialSnapshotRequested, ShowRoadmapEvent
@@ -360,7 +361,7 @@ class ReturnButton(QPushButton):
     def __init__(self, parent=None):
         super(ReturnButton, self).__init__(parent)
         self.setIcon(IconRegistry.return_icon())
-        self.setText('Back')
+        self.setText(t('Back'))
         self.setProperty('return', True)
         underline(self)
         bold(self)
@@ -389,7 +390,7 @@ class _NovelSyncWidget(QWidget):
         self._wdgBottom = QWidget()
         hbox(self._wdgBottom)
 
-        self.lblTitle = QLabel('Novel synchronization')
+        self.lblTitle = QLabel(t('Novel synchronization'))
         underline(self.lblTitle)
         bold(self.lblTitle)
 
@@ -407,18 +408,18 @@ class _NovelSyncWidget(QWidget):
         self.lblUpdateMessage.setMinimumWidth(200)
         self._wdgCenter.layout().addWidget(self.lblUpdateMessage, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        self.lblErrorNotFoundMessage = QLabel('Project not found.')
+        self.lblErrorNotFoundMessage = QLabel(t('Project not found.'))
         self.lblErrorNotFoundMessage.setProperty('error', True)
         self.lblErrorNotFoundMessage.setHidden(True)
         self._wdgCenter.layout().addWidget(self.lblErrorNotFoundMessage, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        self.btnCheck = QPushButton('Check for updates')
+        self.btnCheck = QPushButton(t('Check for updates'))
         self.btnCheck.setProperty('base', True)
         pointy(self.btnCheck)
         self.btnCheck.setIcon(IconRegistry.refresh_icon('black'))
         self.btnCheck.installEventFilter(ButtonPressResizeEventFilter(self.btnCheck))
 
-        self.btnSync = QPushButton('Synchronize')
+        self.btnSync = QPushButton(t('Synchronize'))
         pointy(self.btnSync)
         self.btnSync.setProperty('base', True)
         self.btnSync.setProperty('positive', True)
@@ -437,8 +438,8 @@ class _NovelSyncWidget(QWidget):
 
 
 class NovelSyncButton(QPushButton):
-    UP_TO_DATE_MSG: str = 'Up-to-date'
-    UPDATES_AVAILABLE_MSG: str = 'New updates are available'
+    UP_TO_DATE_MSG: str = t('Up-to-date')
+    UPDATES_AVAILABLE_MSG: str = t('New updates are available')
 
     def __init__(self, parent=None):
         super(NovelSyncButton, self).__init__(parent)

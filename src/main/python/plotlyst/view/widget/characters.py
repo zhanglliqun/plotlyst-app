@@ -222,15 +222,15 @@ class CharacterSelectorMenu(ScrollableMenuWidget):
                                 parent=self)
             font = charAction.font()
             if not char.name:
-                charAction.setText('Character')
+                charAction.setText(t('Character'))
                 font.setItalic(True)
             charAction.setFont(font)
             self.addAction(charAction)
 
         if not self.actions():
-            self.addSection('No characters were found')
+            self.addSection(t('No characters were found'))
             self.addSeparator()
-            self.addSection('Go to the Characters panel to create your first character')
+            self.addSection(t('Go to the Characters panel to create your first character'))
 
         self._frame.updateGeometry()
 
@@ -327,7 +327,7 @@ class CharacterLinkWidget(QWidget):
 
         self._clearLabel()
         self.label = CharacterLabel(self.character)
-        self.label.setToolTip(f'<html>Agenda character: <b>{character.name}</b>')
+        self.label.setToolTip(f'<html>{t("Agenda character:")} <b>{character.name}</b>')
         self.label.installEventFilter(OpacityEventFilter(self.label, enterOpacity=0.7, leaveOpacity=1.0))
         pointy(self.label)
         self.label.clicked.connect(lambda: self._menu.exec())
@@ -405,7 +405,7 @@ class AvatarSelectors(QWidget):
         scroll.setWidget(self.wdgFirstLetterVariants)
         flow(self.wdgFirstLetterVariants, 0, 0)
 
-        self.btnCustomIcon = push_btn(IconRegistry.icons_icon(), 'Custom icon', transparent_=True)
+        self.btnCustomIcon = push_btn(IconRegistry.icons_icon(), t('Custom icon'), transparent_=True)
         self.btnCustomIcon.clicked.connect(self._selectCustomIcon)
         self.btnCustomIcon.installEventFilter(OpacityEventFilter(self.btnCustomIcon))
 
@@ -420,15 +420,15 @@ class AvatarSelectors(QWidget):
         self.wdgSelectors = QWidget()
         vbox(self.wdgSelectors, spacing=0)
 
-        self.btnImage = push_btn(text='Image', checkable=True, properties=['main-side-nav'])
+        self.btnImage = push_btn(text=t('Image'), checkable=True, properties=['main-side-nav'])
         self.btnInitial = push_btn(IconRegistry.from_name('mdi.alpha-a-circle', color_on=RELAXED_WHITE_COLOR),
-                                   text='Icon',
+                                   text=t('Icon'),
                                    checkable=True, properties=['main-side-nav'])
         self.btnRole = push_btn(IconRegistry.from_name('fa5s.chess-bishop', color_on=RELAXED_WHITE_COLOR),
-                                text='Role icon',
+                                text=t('Role icon'),
                                 checkable=True, properties=['main-side-nav'])
 
-        self.btnUploadAvatar = push_btn(IconRegistry.upload_icon(color=RELAXED_WHITE_COLOR), text='Upload image',
+        self.btnUploadAvatar = push_btn(IconRegistry.upload_icon(color=RELAXED_WHITE_COLOR), t('Upload image'),
                                         properties=['base', 'positive'])
         self.btnUploadAvatar.clicked.connect(self._upload_avatar)
         if character.avatar:
@@ -443,7 +443,7 @@ class AvatarSelectors(QWidget):
         self.btnGroupSelectors.addButton(self.btnRole)
         self.btnGroupSelectors.buttonToggled.connect(self._selectorToggled)
 
-        self.wdgLeftSide.layout().addWidget(label('Avatar options', h5=True),
+        self.wdgLeftSide.layout().addWidget(label(t('Avatar options'), h5=True),
                                             alignment=Qt.AlignmentFlag.AlignCenter)
         self.wdgLeftSide.layout().addWidget(line(color='lightgrey'))
         self.wdgSelectors.layout().addWidget(self.btnImage)
@@ -526,19 +526,20 @@ class AvatarSelectors(QWidget):
         self.selectorChanged.emit()
 
     def _upload_avatar(self):
-        filename: str = QFileDialog.getOpenFileName(None, 'Choose an image', '', 'Images (*.png *.jpg *jpeg *.webp)')
+        filename: str = QFileDialog.getOpenFileName(None, t('Choose an image'), '',
+                                                    t('Images (*.png *.jpg *jpeg *.webp)'))
         if not filename or not filename[0]:
             return
         reader = QImageReader(filename[0])
         reader.setAutoTransform(True)
         image: QImage = reader.read()
         if image is None:
-            QMessageBox.warning(self, 'Error while loading image',
-                                'Could not load image. Did you select a valid image? (e.g.: png, jpg, jpeg)')
+            QMessageBox.warning(self, t('Error while loading image'),
+                                t('Could not load image. Did you select a valid image? (e.g.: png, jpg, jpeg)'))
             return
         if image.width() < 128 or image.height() < 128:
-            QMessageBox.warning(self, 'Uploaded image is too small',
-                                'The uploaded image is too small. It must be larger than 128 pixels')
+            QMessageBox.warning(self, t('Uploaded image is too small'),
+                                t('The uploaded image is too small. It must be larger than 128 pixels'))
             return
 
         pixmap = QPixmap.fromImage(image)
@@ -598,7 +599,7 @@ class CharacterAvatar(QWidget):
 
     def setUploadPopupMenu(self):
         if not self._character:
-            raise ValueError('Set character first')
+            raise ValueError(t('Set character first'))
         if self._menu is None:
             self._menu = MenuWidget(self.btnAvatar)
             self._menu.aboutToShow.connect(self._aboutToShowMenu)
@@ -743,11 +744,12 @@ class CharactersProgressWidget(QWidget, Ui_CharactersProgressWidget, EventListen
             self._layout.addWidget(btn, 0, i + 1)
         self._layout.addWidget(spacer(), 0, self._layout.columnCount())
 
-        self._addLabel(self.RowOverall, 'Overall', IconRegistry.progress_check_icon(), Qt.AlignmentFlag.AlignCenter)
+        self._addLabel(self.RowOverall, t('Overall'), IconRegistry.progress_check_icon(),
+                       Qt.AlignmentFlag.AlignCenter)
         self._addLine(self.RowOverall + 1)
-        self._addLabel(self.RowName, 'Name', IconRegistry.character_icon())
-        self._addLabel(self.RowRole, 'Role', IconRegistry.major_character_icon())
-        self._addLabel(self.RowGender, 'Gender', IconRegistry.male_gender_icon())
+        self._addLabel(self.RowName, t('Name'), IconRegistry.character_icon())
+        self._addLabel(self.RowRole, t('Role'), IconRegistry.major_character_icon())
+        self._addLabel(self.RowGender, t('Gender'), IconRegistry.male_gender_icon())
 
         row = self.RowGender + 1
         self._addLine(row)
@@ -763,12 +765,12 @@ class CharactersProgressWidget(QWidget, Ui_CharactersProgressWidget, EventListen
         if app_env.profile().get('backstory', False):
             row += 1
             self._backstoryRow = row
-            self._addLabel(row, 'Backstory', IconRegistry.backstory_icon())
+            self._addLabel(row, t('Backstory'), IconRegistry.backstory_icon())
 
         if app_env.profile().get('origin', False):
             row += 1
             self._topicRow = row
-            self._addLabel(row, 'Topics', IconRegistry.topics_icon())
+            self._addLabel(row, t('Topics'), IconRegistry.topics_icon())
 
         row += 1
         self._layout.addWidget(vspacer(), row, 0)

@@ -26,8 +26,8 @@ from language_tool_python import LanguageTool
 from language_tool_python.download_lt import LATEST_VERSION
 from overrides import overrides
 
-from plotlyst.core.domain import Novel, Event, Location
-from plotlyst.event.core import emit_global_event, emit_info, EventListener
+from plotlyst.core.domain import Novel, Location
+from plotlyst.event.core import emit_global_event, emit_info, EventListener, Event
 from plotlyst.event.handler import event_dispatchers
 from plotlyst.events import LanguageToolSet, CharacterChangedEvent, RequestMilieuDictionaryResetEvent
 

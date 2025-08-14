@@ -22,6 +22,8 @@ from typing import Optional
 import qtawesome
 from PyQt6.QtWidgets import QMessageBox
 
+from plotlyst.i18n import t
+
 
 class ErrorMessageBox(QMessageBox):
     def __init__(self, msg: str, details: Optional[str] = None, warning: bool = False, parent=None):
@@ -32,15 +34,15 @@ class ErrorMessageBox(QMessageBox):
         if details:
             self.setDetailedText(details)
             for btn in self.buttons():
-                if btn.text().startswith('Show Details'):
+                if btn.text().startswith(t('Show Details')):
                     btn.click()
 
         if warning:
-            self.setIcon(QMessageBox.Warning)
-            self.setWindowTitle('Warning')
+            self.setIcon(QMessageBox.Icon.Warning)
+            self.setWindowTitle(t('Warning'))
         else:
-            self.setIcon(QMessageBox.Critical)
-            self.setWindowTitle('Error')
+            self.setIcon(QMessageBox.Icon.Critical)
+            self.setWindowTitle(t('Error'))
 
     def display(self) -> int:
         return self.exec()

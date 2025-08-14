@@ -14,7 +14,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Plotlyst</string>
+   <string tr="true">Plotlyst</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -137,7 +137,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Novel</string>
+              <string tr="true">Novel</string>
              </property>
              <property name="text">
               <string/>
@@ -189,7 +189,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Characters</string>
+              <string tr="true">Characters</string>
              </property>
              <property name="text">
               <string/>
@@ -238,7 +238,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Narrative Manager</string>
+              <string tr="true">Narrative Manager</string>
              </property>
              <property name="text">
               <string/>
@@ -290,7 +290,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>World-building</string>
+              <string tr="true">World-building</string>
              </property>
              <property name="text">
               <string/>
@@ -342,7 +342,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Manuscript</string>
+              <string tr="true">Manuscript</string>
              </property>
              <property name="text">
               <string/>
@@ -391,7 +391,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Documents</string>
+              <string tr="true">Documents</string>
              </property>
              <property name="text">
               <string/>
@@ -472,7 +472,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Task management</string>
+              <string tr="true">Task management</string>
              </property>
              <property name="text">
               <string/>
@@ -521,7 +521,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Reports</string>
+              <string tr="true">Reports</string>
              </property>
              <property name="text">
               <string/>
@@ -570,7 +570,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Formatting and typesetting</string>
+              <string tr="true">Formatting and typesetting</string>
              </property>
              <property name="text">
               <string/>
@@ -632,7 +632,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Jump to Knowledge Base</string>
+              <string tr="true">Jump to Knowledge Base</string>
              </property>
              <property name="text">
               <string/>
@@ -678,7 +678,7 @@
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="toolTip">
-              <string>Jump to novel settings</string>
+              <string tr="true">Jump to novel settings</string>
              </property>
              <property name="text">
               <string/>
@@ -986,14 +986,14 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string tr="true">File</string>
     </property>
     <property name="toolTipsVisible">
      <bool>true</bool>
     </property>
     <widget class="QMenu" name="menuProject">
      <property name="title">
-      <string>Project</string>
+      <string tr="true">Project</string>
      </property>
      <property name="toolTipsVisible">
       <bool>true</bool>
@@ -1007,14 +1007,14 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string tr="true">Help</string>
     </property>
     <property name="toolTipsVisible">
      <bool>true</bool>
     </property>
     <widget class="QMenu" name="menuSocials">
      <property name="title">
-      <string>Socials</string>
+      <string tr="true">Socials</string>
      </property>
      <addaction name="actionSocialDiscord"/>
      <addaction name="separator"/>
@@ -1043,7 +1043,7 @@
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string tr="true">Edit</string>
     </property>
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
@@ -1051,14 +1051,14 @@
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
-     <string>Window</string>
+     <string tr="true">Window</string>
     </property>
     <widget class="QMenu" name="menuDetachPanels">
      <property name="toolTip">
-      <string>Detach panels to separate windows</string>
+      <string tr="true">Detach panels to separate windows</string>
      </property>
      <property name="title">
-      <string>Detach panels</string>
+      <string tr="true">Detach panels</string>
      </property>
      <addaction name="actionDetachCharacters"/>
      <addaction name="actionDetachScenes"/>
@@ -1071,7 +1071,7 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string tr="true">Tools</string>
     </property>
     <addaction name="actionPatronRecognitionBuilder"/>
     <addaction name="actionCaptureProgress"/>
@@ -1084,7 +1084,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string tr="true">toolBar</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -1102,12 +1102,12 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string tr="true">About</string>
    </property>
   </action>
   <action name="actionIncreaseFontSize">
    <property name="text">
-    <string>Increase font size</string>
+    <string tr="true">Increase font size</string>
    </property>
    <property name="shortcut">
     <string>Ctrl++</string>
@@ -1115,7 +1115,7 @@
   </action>
   <action name="actionDecreaseFontSize">
    <property name="text">
-    <string>Decrease font size</string>
+    <string tr="true">Decrease font size</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
@@ -1123,50 +1123,50 @@
   </action>
   <action name="actionPersist">
    <property name="text">
-    <string>Persist</string>
+    <string tr="true">Persist</string>
    </property>
   </action>
   <action name="actionImportScrivener">
    <property name="text">
-    <string>Import from Scrivener</string>
+    <string tr="true">Import from Scrivener</string>
    </property>
   </action>
   <action name="actionCut">
    <property name="text">
-    <string>Cut</string>
+    <string tr="true">Cut</string>
    </property>
   </action>
   <action name="actionCopy">
    <property name="text">
-    <string>Copy</string>
+    <string tr="true">Copy</string>
    </property>
   </action>
   <action name="actionPaste">
    <property name="text">
-    <string>Paste</string>
+    <string tr="true">Paste</string>
    </property>
   </action>
   <action name="actionDelete">
    <property name="text">
-    <string>Delete</string>
+    <string tr="true">Delete</string>
    </property>
   </action>
   <action name="actionCharacterTemplateEditor">
    <property name="text">
-    <string>Character template editor</string>
+    <string tr="true">Character template editor</string>
    </property>
   </action>
   <action name="actionResetHints">
    <property name="text">
-    <string>Show all hints</string>
+    <string tr="true">Show all hints</string>
    </property>
    <property name="toolTip">
-    <string>Show all hints again. The application needs to be shut down to apply the changes</string>
+    <string tr="true">Show all hints again. The application needs to be shut down to apply the changes</string>
    </property>
   </action>
   <action name="actionPreview">
    <property name="text">
-    <string>Manuscript preview</string>
+    <string tr="true">Manuscript preview</string>
    </property>
   </action>
   <action name="actionDirPlaceholder">
@@ -1185,132 +1185,132 @@
   </action>
   <action name="actionChangeDir">
    <property name="text">
-    <string>Change project directory...</string>
+    <string tr="true">Change project directory...</string>
    </property>
   </action>
   <action name="actionResourceManager">
    <property name="text">
-    <string>Resource manager</string>
+    <string tr="true">Resource manager</string>
    </property>
   </action>
   <action name="actionOpenProjectDir">
    <property name="text">
-    <string>Open in explorer...</string>
+    <string tr="true">Open in explorer...</string>
    </property>
   </action>
   <action name="actionLogs">
    <property name="text">
-    <string>Logs</string>
+    <string tr="true">Logs</string>
    </property>
   </action>
   <action name="actionContact">
    <property name="text">
-    <string>Contact</string>
+    <string tr="true">Contact</string>
    </property>
   </action>
   <action name="actionFeatureRequest">
    <property name="text">
-    <string>Feature request</string>
+    <string tr="true">Feature request</string>
    </property>
   </action>
   <action name="actionPlotlystWebsite">
    <property name="text">
-    <string>Plotlyst website</string>
+    <string tr="true">Plotlyst website</string>
    </property>
   </action>
   <action name="actionRoadmap">
    <property name="text">
-    <string>Roadmap</string>
+    <string tr="true">Roadmap</string>
    </property>
   </action>
   <action name="actionFacebook">
    <property name="text">
-    <string>Facebook</string>
+    <string tr="true">Facebook</string>
    </property>
   </action>
   <action name="actionYoutube">
    <property name="text">
-    <string>Youtube</string>
+    <string tr="true">Youtube</string>
    </property>
   </action>
   <action name="actionInstagram">
    <property name="text">
-    <string>Instagram</string>
+    <string tr="true">Instagram</string>
    </property>
   </action>
   <action name="actionXTwitter">
    <property name="text">
-    <string>X (Twitter)</string>
+    <string tr="true">X (Twitter)</string>
    </property>
   </action>
   <action name="actionPinterest">
    <property name="text">
-    <string>Pinterest</string>
+    <string tr="true">Pinterest</string>
    </property>
   </action>
   <action name="actionDiscord">
    <property name="text">
-    <string>Discord</string>
+    <string tr="true">Discord</string>
    </property>
   </action>
   <action name="actionSocialDiscord">
    <property name="text">
-    <string>Discord</string>
+    <string tr="true">Discord</string>
    </property>
   </action>
   <action name="actionDetachCharacters">
    <property name="text">
-    <string>Detach characters</string>
+    <string tr="true">Detach characters</string>
    </property>
   </action>
   <action name="actionDetachScenes">
    <property name="text">
-    <string>Detach narrative manager</string>
+    <string tr="true">Detach narrative manager</string>
    </property>
   </action>
   <action name="actionDetachWorldbuilding">
    <property name="text">
-    <string>Detach world-building</string>
+    <string tr="true">Detach world-building</string>
    </property>
   </action>
   <action name="actionDetachDocuments">
    <property name="text">
-    <string>Detach documents</string>
+    <string tr="true">Detach documents</string>
    </property>
   </action>
   <action name="actionDetachTask">
    <property name="text">
-    <string>Detach task management</string>
+    <string tr="true">Detach task management</string>
    </property>
   </action>
   <action name="actionDetachReports">
    <property name="text">
-    <string>Detach reports</string>
+    <string tr="true">Detach reports</string>
    </property>
   </action>
   <action name="actionThreads">
    <property name="text">
-    <string>Threads</string>
+    <string tr="true">Threads</string>
    </property>
   </action>
   <action name="actionPatreon">
    <property name="text">
-    <string>Patreon</string>
+    <string tr="true">Patreon</string>
    </property>
   </action>
   <action name="actionPatronRecognitionBuilder">
    <property name="text">
-    <string>Patron Recognition Builder</string>
+    <string tr="true">Patron Recognition Builder</string>
    </property>
   </action>
   <action name="actionPurchase">
    <property name="text">
-    <string>Purchase</string>
+    <string tr="true">Purchase</string>
    </property>
   </action>
   <action name="actionCaptureProgress">
    <property name="text">
-    <string>Capture progress</string>
+    <string tr="true">Capture progress</string>
    </property>
   </action>
  </widget>

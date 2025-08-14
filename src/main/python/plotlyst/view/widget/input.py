@@ -50,6 +50,7 @@ from plotlyst.core.domain import TextStatistics, Character, Label
 from plotlyst.core.text import wc
 from plotlyst.env import app_env
 from plotlyst.event.core import EventListener, Event
+from plotlyst.i18n import t
 from plotlyst.event.handler import global_event_dispatcher
 from plotlyst.events import LanguageToolSet
 from plotlyst.model.characters_model import CharactersTableModel
@@ -638,11 +639,13 @@ class DocumentTextEdit(TextEditBase):
     grammarCheckToggled = pyqtSignal(bool)
 
     @overrides
-    def createEnhancedContextMenu(self, pos: QPoint) -> QMenu:
-        menu = super(DocumentTextEdit, self).createEnhancedContextMenu(pos)
+    def createEnhancedContextMenu(self, pos: QPoint) -> MenuWidget:
+        q_menu = super(DocumentTextEdit, self).createEnhancedContextMenu(pos)
+        menu = MenuWidget()
+        menu.addActions(q_menu.actions())
 
         menu.addSeparator()
-        grammar_action = action('Grammar check', slot=self.grammarCheckToggled.emit, parent=menu, checkable=True)
+        grammar_action = action(t('Grammar check'), slot=self.grammarCheckToggled.emit, parent=menu, checkable=True)
         grammar_action.setChecked(app_env.novel.prefs.docs.grammar_check)
         menu.addAction(grammar_action)
         return menu
@@ -715,7 +718,7 @@ class DocumentTextEditor(TextEditorBase):
         self._btnIcon.installEventFilter(OpacityEventFilter(self._btnIcon, leaveOpacity=1.0, enterOpacity=0.8))
         self._btnIcon.clicked.connect(self._changeIcon)
         self._textTitle = QLineEdit()
-        self._textTitle.setPlaceholderText('Untitled')
+        self._textTitle.setPlaceholderText(t('Untitled'))
         self._textTitle.setProperty('transparent', True)
         self._textTitle.setFrame(False)
         title_font = self._textTitle.font()
@@ -1068,7 +1071,7 @@ class FontSizeSpinBox(QWidget):
     DEFAULT_VALUE: int = 2
     fontChanged = pyqtSignal(int)
 
-    def __init__(self, font_size_prefix: str = "Font Size:"):
+    def __init__(self, font_size_prefix: str = t("Font Size:")):
         super().__init__()
         self._font_sizes = [8, 10, 11, 12, 13, 14, 16, 18, 20, 24, 28, 32, 48, 64]
 
@@ -1122,7 +1125,7 @@ class TextInputDialog(PopupDialog):
         self.lineKey.setText(value)
         self.lineKey.textChanged.connect(self._textChanged)
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm', 'positive'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm', 'positive'])
         self.btnConfirm.setShortcut(Qt.Key.Key_Return)
         sp(self.btnConfirm).h_exp()
         self.btnConfirm.clicked.connect(self.accept)
@@ -1130,7 +1133,7 @@ class TextInputDialog(PopupDialog):
         self.btnConfirm.installEventFilter(
             DisabledClickEventFilter(self.btnConfirm, lambda: qtanim.shake(self.lineKey)))
 
-        self.btnCancel = push_btn(text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
         self.frame.layout().addWidget(self.wdgTitle)
@@ -1149,7 +1152,8 @@ class TextInputDialog(PopupDialog):
         return None
 
     @classmethod
-    def edit(cls, title: str = 'Edit text', placeholder: str = 'Edit text', value: str = '', description: str = ''):
+    def edit(cls, title: str = t('Edit text'), placeholder: str = t('Edit text'), value: str = '',
+             description: str = ''):
         return cls.popup(title, placeholder, value, description)
 
     def _textChanged(self, key: str):
@@ -1182,7 +1186,7 @@ class IconTextInputDialog(PopupDialog):
         self.lineKey.setIcon(IconRegistry.from_name(icon if icon else 'fa5s.icons', color))
         self.lineKey.iconChanged.connect(self._iconChanged)
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm', 'positive'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm', 'positive'])
         self.btnConfirm.setShortcut(Qt.Key.Key_Return)
         sp(self.btnConfirm).h_exp()
         self.btnConfirm.clicked.connect(self.accept)
@@ -1190,7 +1194,7 @@ class IconTextInputDialog(PopupDialog):
         link_editor_to_btn(self.lineKey.lineEdit, self.btnConfirm, disabledShake=True, shakedWidget=self.lineKey)
         self.lineKey.setText(value)
 
-        self.btnCancel = push_btn(text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
         self.frame.layout().addWidget(self.wdgTitle)
@@ -1210,7 +1214,8 @@ class IconTextInputDialog(PopupDialog):
         return None
 
     @classmethod
-    def edit(cls, title: str = 'Edit text', placeholder: str = 'Edit text', value: str = '', description: str = '',
+    def edit(cls, title: str = t('Edit text'), placeholder: str = t('Edit text'), value: str = '',
+             description: str = '',
              icon: str = '',
              color: str = 'black'):
         return cls.popup(title, placeholder, value, description, icon, color)
@@ -1246,12 +1251,12 @@ class SpinBoxDialog(PopupDialog):
         # self.spinBox.setProperty('rounded', True)
         self.spinBox.valueChanged.connect(self._valueChanged)
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm', 'positive'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm', 'positive'])
         self.btnConfirm.setShortcut(Qt.Key.Key_Return)
         sp(self.btnConfirm).h_exp()
         self.btnConfirm.clicked.connect(self.accept)
 
-        self.btnCancel = push_btn(text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
         self.frame.layout().addWidget(self.wdgTitle)
@@ -1270,7 +1275,8 @@ class SpinBoxDialog(PopupDialog):
         return None
 
     @classmethod
-    def edit(cls, title: str = 'Edit value', value: int = 0, min_value: int = 0, max_value: int = 100, step: int = 1,
+    def edit(cls, title: str = t('Edit value'), value: int = 0, min_value: int = 0, max_value: int = 100,
+             step: int = 1,
              description: str = ''):
         return cls.popup(title, value, min_value, max_value, step, description)
 
@@ -1305,14 +1311,14 @@ class TextAreaInputDialog(PopupDialog):
         self.textEdit.textChanged.connect(self._textChanged)
         self.textEdit.installEventFilter(self)
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm', 'positive'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm', 'positive'])
         self.btnConfirm.setShortcut(Qt.Key.Key_Return)
         sp(self.btnConfirm).h_exp()
         self.btnConfirm.clicked.connect(self.accept)
         self.btnConfirm.setDisabled(True)
         self.btnConfirm.installEventFilter(
             DisabledClickEventFilter(self.btnConfirm, lambda: qtanim.shake(self.textEdit)))
-        self.btnCancel = push_btn(text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
         self.frame.layout().addWidget(self.wdgTitle)
@@ -1337,7 +1343,7 @@ class TextAreaInputDialog(PopupDialog):
         return super().eventFilter(watched, event)
 
     @classmethod
-    def edit(cls, title: str = 'Edit text', placeholder: str = 'Edit text', description: str = 'Edit text',
+    def edit(cls, title: str = t('Edit text'), placeholder: str = t('Edit text'), description: str = t('Edit text'),
              value: str = ''):
         return cls.popup(title, placeholder, description, value)
 
@@ -1377,8 +1383,8 @@ class LabelWidget(QFrame):
         self.layout().addWidget(self.btnMenu)
         self.btnMenu.setHidden(True)
         menu = MenuWidget(self.btnMenu)
-        menu.addAction(action('Edit', IconRegistry.edit_icon(), self._edit))
-        menu.addAction(action('Remove', IconRegistry.trash_can_icon(), self.removed))
+        menu.addAction(action(t('Edit'), IconRegistry.edit_icon(), self._edit))
+        menu.addAction(action(t('Remove'), IconRegistry.trash_can_icon(), self.removed))
 
         pointy(self)
         self.btnMenu.setCursor(Qt.CursorShape.ArrowCursor)
@@ -1406,7 +1412,7 @@ class LabelWidget(QFrame):
         self.btnMenu.setHidden(True)
 
     def _edit(self):
-        new_text = TextInputDialog.edit('Edit label', value=self.lblWidget.text())
+        new_text = TextInputDialog.edit(t('Edit label'), value=self.lblWidget.text())
         if new_text:
             self._label.keyword = new_text
             self.lblWidget.setText(new_text)
@@ -1466,7 +1472,7 @@ class LabelsEditor(QFrame):
         self.linePlaceholder.setObjectName('labelPlaceholder')
         self.linePlaceholder.setProperty('transparent', True)
         self.linePlaceholder.setProperty(IGNORE_CAPITALIZATION_PROPERTY, True)
-        self.linePlaceholder.setPlaceholderText('Edit')
+        self.linePlaceholder.setPlaceholderText(t('Edit'))
         self.linePlaceholder.installEventFilter(self)
         self.linePlaceholder.editingFinished.connect(self._editingFinished)
 

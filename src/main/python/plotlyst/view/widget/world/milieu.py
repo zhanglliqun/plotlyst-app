@@ -131,9 +131,9 @@ class LocationsTreeView(ItemBasedTreeView):
             self._selectionChanged(node, True)
 
     @overrides
-    def updateItem(self, location: Location):
-        super().updateItem(location)
-        for ref in entities_registry.refs(location):
+    def updateItem(self, item):
+        super().updateItem(item)
+        for ref in entities_registry.refs(item):
             if isinstance(ref, WorldBuildingEntity):
                 self.updateWorldBuildingEntity.emit(ref)
 
@@ -204,8 +204,8 @@ class LocationsTreeView(ItemBasedTreeView):
         emit_event(self._novel, LocationDeletedEvent(self, loc))
 
     @overrides
-    def _emitSelectionChanged(self, location: Location):
-        self.locationSelected.emit(location)
+    def _emitSelectionChanged(self, item):
+        self.locationSelected.emit(item)
 
     @overrides
     def _mimeType(self) -> str:
@@ -216,26 +216,26 @@ class LocationsTreeView(ItemBasedTreeView):
         return self._novel.locations
 
     @overrides
-    def _node(self, location: Location) -> LocationNode:
-        return LocationNode(location, settings=self._settings)
+    def _node(self, item) -> LocationNode:
+        return LocationNode(item, settings=self._settings)
 
     @overrides
     def _save(self):
         self.repo.update_novel(self._novel)
 
     @overrides
-    def _removeFromParentEntity(self, location: Location, node: LocationNode):
+    def _removeFromParentEntity(self, item, node):
         if node.parent() is self._centralWidget:
-            self._novel.locations.remove(location)
+            self._novel.locations.remove(item)
         else:
-            super()._removeFromParentEntity(location, node)
+            super()._removeFromParentEntity(item, node)
 
     @overrides
-    def _initNode(self, location: Location) -> LocationNode:
-        node = LocationNode(location, readOnly=self._readOnly, checkable=self._checkable, settings=self._settings)
+    def _initNode(self, item) -> LocationNode:
+        node = LocationNode(item, readOnly=self._readOnly, checkable=self._checkable, settings=self._settings)
         if self._checkable:
             node.setChecked(True)
-        self._nodes[location] = node
+        self._nodes[item] = node
         node.selectionChanged.connect(partial(self._selectionChanged, node))
         node.added.connect(partial(self._addLocationUnder, node))
         node.deleted.connect(partial(self._deleteLocation, node))

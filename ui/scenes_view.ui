@@ -112,7 +112,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Cards view</string>
+             <string tr="true">Cards view</string>
             </property>
             <property name="text">
              <string/>
@@ -137,7 +137,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Table view</string>
+             <string tr="true">Table view</string>
             </property>
             <property name="text">
              <string/>
@@ -162,7 +162,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Story grid view</string>
+             <string tr="true">Story grid view</string>
             </property>
             <property name="text">
              <string/>
@@ -187,7 +187,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Storymap view</string>
+             <string tr="true">Storymap view</string>
             </property>
             <property name="text">
              <string/>
@@ -212,7 +212,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Distribution view</string>
+             <string tr="true">Distribution view</string>
             </property>
             <property name="text">
              <string/>
@@ -241,7 +241,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Progress view</string>
+             <string tr="true">Progress view</string>
             </property>
             <property name="text">
              <string/>
@@ -304,10 +304,10 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Toggle chapters display</string>
+             <string tr="true">Toggle chapters display</string>
             </property>
             <property name="text">
-             <string>Chapters</string>
+             <string tr="true">Chapters</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -336,7 +336,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Add new scene</string>
+             <string tr="true">Add new scene</string>
             </property>
             <property name="text">
              <string/>
@@ -364,7 +364,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Add new scene or chapter</string>
+             <string tr="true">Add new scene or chapter</string>
             </property>
             <property name="text">
              <string/>
@@ -395,7 +395,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Edit selected scene</string>
+             <string tr="true">Edit selected scene</string>
             </property>
             <property name="text">
              <string/>
@@ -439,7 +439,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Delete scene</string>
+             <string tr="true">Delete scene</string>
             </property>
             <property name="text">
              <string/>
@@ -484,7 +484,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Apply additional filters</string>
+             <string tr="true">Apply additional filters</string>
             </property>
             <property name="text">
              <string/>
@@ -503,7 +503,7 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Customize view</string>
+             <string tr="true">Customize view</string>
             </property>
             <property name="text">
              <string/>
@@ -541,7 +541,7 @@
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="toolTip">
-               <string>Toggle story structure display</string>
+               <string tr="true">Toggle story structure display</string>
               </property>
               <property name="text">
                <string/>
@@ -918,7 +918,7 @@
                        <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="toolTip">
-                       <string>Customize stages</string>
+                       <string tr="true">Customize stages</string>
                       </property>
                       <property name="text">
                        <string/>
@@ -1037,7 +1037,7 @@
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
                     <property name="text">
-                     <string>Story Map</string>
+                     <string tr="true">Story Map</string>
                     </property>
                     <property name="checkable">
                      <bool>true</bool>
@@ -1065,7 +1065,7 @@
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
                     <property name="text">
-                     <string>Story Grid</string>
+                     <string tr="true">Story Grid</string>
                     </property>
                     <property name="checkable">
                      <bool>true</bool>
@@ -1121,7 +1121,7 @@
                   <item>
                    <widget class="QLabel" name="lblStorymapDesc">
                     <property name="text">
-                     <string>Link storylines to scenes and visualize their occurrence</string>
+                     <string tr="true">Link storylines to scenes and visualize their occurrence</string>
                     </property>
                     <property name="wordWrap">
                      <bool>false</bool>
@@ -1150,7 +1150,7 @@
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
                     <property name="text">
-                     <string>Detailed</string>
+                     <string tr="true">Detailed</string>
                     </property>
                     <property name="transparent" stdset="0">
                      <bool>true</bool>

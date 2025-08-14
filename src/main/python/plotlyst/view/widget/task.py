@@ -37,6 +37,7 @@ from plotlyst.core.domain import TaskStatus, Task, Novel, Character, task_tags
 from plotlyst.core.template import SelectionItem
 from plotlyst.env import app_env
 from plotlyst.event.core import Event, emit_event, EventListener
+from plotlyst.i18n import t
 from plotlyst.event.handler import event_dispatchers
 from plotlyst.events import CharacterDeletedEvent, TaskChanged, TaskDeleted, TaskChangedToWip, \
     TaskChangedFromWip, CharacterChangedEvent
@@ -61,9 +62,9 @@ class TaskEditorPopup(PopupDialog):
         self._task = task
 
         if self._status is None and self._task is None:
-            raise ValueError('Either status or task must be given')
+            raise ValueError(t('Either status or task must be given'))
 
-        self.title = label('Edit task' if self._task else 'Add new task', h4=True)
+        self.title = label(t('Edit task') if self._task else t('Add new task'), h4=True)
         sp(self.title).v_max()
         self.wdgTitle = QWidget()
         hbox(self.wdgTitle)
@@ -75,21 +76,21 @@ class TaskEditorPopup(PopupDialog):
         self.lineTitle.setMinimumWidth(300)
         self.lineTitle.setProperty('white-bg', True)
         self.lineTitle.setProperty('rounded', True)
-        self.lineTitle.setPlaceholderText('Title of your task')
+        self.lineTitle.setPlaceholderText(t('Title of your task'))
         self.lineTitle.textChanged.connect(self._titleChanged)
 
         self.textSummary = QTextEdit()
         self.textSummary.setProperty('white-bg', True)
         self.textSummary.setProperty('rounded', True)
-        self.textSummary.setPlaceholderText('Task description')
+        self.textSummary.setPlaceholderText(t('Task description'))
 
-        self.btnConfirm = push_btn(text='Confirm', properties=['confirm', 'positive'])
+        self.btnConfirm = push_btn(text=t('Confirm'), properties=['confirm', 'positive'])
         sp(self.btnConfirm).h_exp()
         self.btnConfirm.clicked.connect(self.accept)
         self.btnConfirm.setDisabled(True)
         self.btnConfirm.installEventFilter(
             DisabledClickEventFilter(self.btnConfirm, lambda: qtanim.shake(self.lineTitle)))
-        self.btnCancel = push_btn(text='Cancel', properties=['confirm', 'cancel'])
+        self.btnCancel = push_btn(text=t('Cancel'), properties=['confirm', 'cancel'])
         self.btnCancel.clicked.connect(self.reject)
 
         if self._task:
@@ -139,7 +140,7 @@ class TaskWidget(QFrame):
         self.setToolTip(self._task.summary)
 
         self._charSelector = CharacterSelectorButton(app_env.novel, self, opacityEffectEnabled=False, iconSize=24)
-        self._charSelector.setToolTip('Link character')
+        self._charSelector.setToolTip(t('Link character'))
         decr_icon(self._charSelector)
         if self._task.character_id:
             self._charSelector.setCharacter(self._task.character(app_env.novel))
@@ -161,18 +162,18 @@ class TaskWidget(QFrame):
         self._btnTags = TaskTagSelector(self._wdgBottom)
         self._btnTags.tagSelected.connect(self._tagChanged)
 
-        self._btnResolve = tool_btn(IconRegistry.from_name('fa5s.check', 'grey'), 'Resolve task',
+        self._btnResolve = tool_btn(IconRegistry.from_name('fa5s.check', 'grey'), t('Resolve task'),
                                     properties=['transparent-circle-bg-on-hover', 'positive'], parent=self._wdgBottom)
         decr_icon(self._btnResolve)
         self._btnResolve.clicked.connect(self.resolved.emit)
 
-        self._btnMenu = tool_btn(IconRegistry.dots_icon('grey'), 'Menu', properties=['transparent-circle-bg-on-hover'],
+        self._btnMenu = tool_btn(IconRegistry.dots_icon('grey'), t('Menu'), properties=['transparent-circle-bg-on-hover'],
                                  parent=self._wdgBottom)
         decr_icon(self._btnMenu)
         menu = MenuWidget(self._btnMenu)
-        menu.addAction(action('Edit', IconRegistry.edit_icon(), self._edit))
+        menu.addAction(action(t('Edit'), IconRegistry.edit_icon(), self._edit))
         menu.addSeparator()
-        menu.addAction(action('Delete', IconRegistry.trash_can_icon(), lambda: self.removalRequested.emit(self)))
+        menu.addAction(action(t('Delete'), IconRegistry.trash_can_icon(), lambda: self.removalRequested.emit(self)))
         menu.aboutToHide.connect(self._onLeave)
         self._wdgBottom.layout().addWidget(self._btnTags)
         self._wdgBottom.layout().addWidget(spacer())
@@ -357,7 +358,7 @@ class StatusColumnWidget(BaseStatusColumnWidget, EventListener):
         super(StatusColumnWidget, self).__init__(status, parent)
         self._novel = novel
 
-        self._btnAdd = QPushButton('New Task', self)
+        self._btnAdd = QPushButton(t('New Task'), self)
         self._btnAdd.setIcon(IconRegistry.plus_icon('grey'))
         retain_when_hidden(self._btnAdd)
         transparent(self._btnAdd)

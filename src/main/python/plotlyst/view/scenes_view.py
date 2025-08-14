@@ -50,6 +50,8 @@ from plotlyst.model.scenes_model import ScenesTableModel, ScenesFilterProxyModel
 from plotlyst.service.cache import acts_registry
 from plotlyst.service.persistence import delete_scene
 from plotlyst.view._view import AbstractNovelView
+from plotly.graph_objs.layout._shape import Shape
+from plotlyst.i18n import t
 from plotlyst.view.common import ButtonPressResizeEventFilter, action, restyle, insert_after
 from plotlyst.view.delegates import ScenesViewDelegate
 from plotlyst.view.generated.scenes_title_ui import Ui_ScenesTitle
@@ -117,7 +119,7 @@ class ScenesTitle(QWidget, Ui_ScenesTitle, EventListener):
         self.refreshDistributionChart()
 
     def refreshTitle(self):
-        self.lblTitle.setText('Scenes' if self.novel.prefs.is_scenes_organization() else 'Chapters')
+        self.lblTitle.setText(t('Scenes') if self.novel.prefs.is_scenes_organization() else t('Chapters'))
 
     def refreshDistributionChart(self):
         self._chartDistribution.refresh(self.novel)
@@ -176,9 +178,9 @@ class ScenesOutlineView(AbstractNovelView):
         self.ui.splitterLeft.setSizes([120, 500])
 
         self._addSceneMenu = MenuWidget(self.ui.btnNewWithMenu)
-        self._addSceneMenu.addAction(action('Add scene', IconRegistry.scene_icon(), self._new_scene))
+        self._addSceneMenu.addAction(action(t('Add scene'), IconRegistry.scene_icon(), self._new_scene))
         self._addSceneMenu.addAction(
-            action('Add chapter', IconRegistry.chapter_icon(), self.ui.treeChapters.addChapter))
+            action(t('Add chapter'), IconRegistry.chapter_icon(), self.ui.treeChapters.addChapter))
 
         self.ui.treeChapters.setSettings(TreeSettings(font_incr=2))
         self.ui.treeChapters.setNovel(self.novel, readOnly=self.novel.is_readonly())
@@ -317,18 +319,18 @@ class ScenesOutlineView(AbstractNovelView):
         if self.novel.is_readonly():
             for btn in [self.ui.btnNew, self.ui.btnNewWithMenu, self.ui.btnDelete]:
                 btn.setDisabled(True)
-                btn.setToolTip('Option is disabled in Scrivener synchronization mode')
+                btn.setToolTip(t('Option is disabled in Scrivener synchronization mode'))
                 btn.installEventFilter(InstantTooltipEventFilter(btn))
 
         self.ui.cards.orderChanged.connect(self._on_scene_cards_swapped)
         self.ui.stackedWidget.setCurrentWidget(self.ui.pageView)
 
         if not app_env.profile().get('storylines', False):
-            PremiumOverlayWidget(self.ui.pageStoryGrid, 'Scene-storyline grid',
+            PremiumOverlayWidget(self.ui.pageStoryGrid, t('Scene-storyline grid'),
                                  icon='mdi.timeline',
                                  alt_link='https://plotlyst.com/docs/scenes/', preview=STORY_GRID_PREVIEW)
 
-            PremiumOverlayWidget(self.ui.pageStorymap, 'Storymap visualization',
+            PremiumOverlayWidget(self.ui.pageStorymap, t('Storymap visualization'),
                                  icon='mdi.transit-connection-horizontal',
                                  alt_link='https://plotlyst.com/docs/scenes/', preview=STORY_MAP_PREVIEW)
 
@@ -576,14 +578,14 @@ class ScenesOutlineView(AbstractNovelView):
 
     def _scene_context_menu(self, scene: Scene) -> MenuWidget:
         menu = MenuWidget()
-        unit = 'scene' if self.novel.prefs.is_scenes_organization() else 'chapter'
-        menu.addAction(action('Edit', IconRegistry.edit_icon(), self._on_edit))
-        action_ = action(f'Insert new {unit}', IconRegistry.plus_icon('black'),
+        unit = t('scene') if self.novel.prefs.is_scenes_organization() else t('chapter')
+        menu.addAction(action(t('Edit'), IconRegistry.edit_icon(), self._on_edit))
+        action_ = action(t('Insert new {}').format(unit), IconRegistry.plus_icon('black'),
                          partial(self._insert_scene_after, scene))
         action_.setDisabled(self.novel.is_readonly())
         menu.addAction(action_)
         menu.addSeparator()
-        action_ = action('Delete', IconRegistry.trash_can_icon(), self.ui.btnDelete.click)
+        action_ = action(t('Delete'), IconRegistry.trash_can_icon(), self.ui.btnDelete.click)
         action_.setDisabled(self.novel.is_readonly())
         menu.addAction(action_)
 
@@ -737,7 +739,7 @@ class ScenesOutlineView(AbstractNovelView):
         for stage in self.novel.stages:
             menu.addAction(action(stage.text, slot=partial(change_stage, stage)))
         menu.addSeparator()
-        menu.addAction(action('Customize', IconRegistry.cog_icon(), slot=self._customize_stages))
+        menu.addAction(action(t('Customize'), IconRegistry.cog_icon(), slot=self._customize_stages))
 
         if not self.novel.prefs.active_stage_id:
             self.novel.prefs.active_stage_id = self.stagesProgress.stage().id
@@ -873,12 +875,12 @@ class ScenesOutlineView(AbstractNovelView):
 
     def _handle_scenes_organization(self):
         scenes_organized = self.novel.prefs.is_scenes_organization()
-        unit = 'scene' if scenes_organized else 'chapter'
+        unit = t('scene') if scenes_organized else t('chapter')
         self.ui.btnNewWithMenu.setVisible(scenes_organized and self.ui.btnChaptersToggle.isChecked())
         self.ui.btnNew.setVisible(not scenes_organized or not self.ui.btnChaptersToggle.isChecked())
-        self.ui.btnNew.setToolTip(f'Add new {unit}')
-        self.ui.btnEdit.setToolTip(f'Edit selected {unit}')
-        self.ui.btnDelete.setToolTip(f'Delete {unit}')
+        self.ui.btnNew.setToolTip(t('Add new {}').format(unit))
+        self.ui.btnEdit.setToolTip(t('Edit selected {}').format(unit))
+        self.ui.btnDelete.setToolTip(t('Delete {}').format(unit))
 
     def _story_map_mode_clicked(self):
         if self.ui.btnStoryMapDisplay.isChecked():

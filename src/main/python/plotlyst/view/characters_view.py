@@ -42,6 +42,7 @@ from plotlyst.service.cache import entities_registry
 from plotlyst.service.persistence import delete_character
 from plotlyst.view._view import AbstractNovelView
 from plotlyst.view.character_editor import CharacterEditor
+from plotlyst.i18n import t
 from plotlyst.view.common import link_buttons_to_pages, ButtonPressResizeEventFilter, \
     action
 from plotlyst.view.generated.characters_title_ui import Ui_CharactersTitle
@@ -161,7 +162,7 @@ class CharactersView(AbstractNovelView):
         if self.novel.is_readonly():
             for btn in [self.ui.btnNew, self.ui.btnDelete]:
                 btn.setDisabled(True)
-                btn.setToolTip('Option disabled in Scrivener synchronization mode')
+                btn.setToolTip(t('Option disabled in Scrivener synchronization mode'))
                 btn.installEventFilter(InstantTooltipEventFilter(btn))
 
         if self.novel.parent:
@@ -218,7 +219,7 @@ class CharactersView(AbstractNovelView):
         self._progress.refresh()
 
         if not app_env.profile().get('network', False):
-            self._networkOverlay = PremiumOverlayWidget(self.ui.pageRelationsView, 'Character network',
+            self._networkOverlay = PremiumOverlayWidget(self.ui.pageRelationsView, t('Character network'),
                                                         icon='ph.share-network-bold',
                                                         alt_link='https://plotlyst.com/docs/characters/',
                                                         preview=NETWORK_PREVIEW)
@@ -282,11 +283,11 @@ class CharactersView(AbstractNovelView):
 
     def _show_card_menu(self, card: CharacterCard, pos: QPoint):
         menu = MenuWidget()
-        menu.addAction(action('Edit profile', IconRegistry.edit_icon(), self._on_edit))
+        menu.addAction(action(t('Edit profile'), IconRegistry.edit_icon(), self._on_edit))
         menu.addAction(
-            action('Edit displayed name', IconRegistry.from_name('mdi.badge-account-outline'), self._on_edit_name))
+            action(t('Edit displayed name'), IconRegistry.from_name('mdi.badge-account-outline'), self._on_edit_name))
         menu.addSeparator()
-        action_ = action('Delete', IconRegistry.trash_can_icon(), self.ui.btnDelete.click)
+        action_ = action(t('Delete'), IconRegistry.trash_can_icon(), self.ui.btnDelete.click)
         action_.setDisabled(self.novel.is_readonly())
         menu.addAction(action_)
         menu.exec()
